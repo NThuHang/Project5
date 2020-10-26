@@ -11,3 +11,4 @@ E:\Hoc tap\Năm 4\Kỳ 1\Project5\Back-End\BLL\bin\Debug\netcoreapp3.1\Model.pdb
 E:\Hoc tap\Năm 4\Kỳ 1\Project5\Back-End\BLL\obj\Debug\netcoreapp3.1\BLL.csproj.CopyComplete
 E:\Hoc tap\Năm 4\Kỳ 1\Project5\Back-End\BLL\obj\Debug\netcoreapp3.1\BLL.dll
 E:\Hoc tap\Năm 4\Kỳ 1\Project5\Back-End\BLL\obj\Debug\netcoreapp3.1\BLL.pdb
+E:\Hoc tap\Năm 4\Kỳ 1\Project5\Back-End\BLL\obj\Debug\netcoreapp3.1\BLL.csproj.CoreCompileInputs.cache

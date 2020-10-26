@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Helper
 {
-    class AppSettings
+    public class AppSettings
     {
         public string Secret { get; set; }
     }

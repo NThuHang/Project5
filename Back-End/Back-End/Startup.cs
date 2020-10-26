@@ -46,7 +46,7 @@ namespace Back_End
 
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            //var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -59,7 +59,7 @@ namespace Back_End
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    //IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
@@ -67,6 +67,8 @@ namespace Back_End
 
             services.AddControllers();
             services.AddTransient<IDatabaseHelper, DatabaseHelper>();
+            services.AddTransient<IGiangVienDAL, GiangVienDAL>();
+            services.AddTransient<IGiangVienBLL, GiangVienBLL>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

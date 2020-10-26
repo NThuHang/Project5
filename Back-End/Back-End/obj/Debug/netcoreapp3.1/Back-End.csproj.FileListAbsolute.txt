@@ -34,3 +34,11 @@ E:\Hoc tap\Năm 4\Kỳ 1\Project5\Back-End\Back-End\bin\Debug\netcoreapp3.1\BLL.
 E:\Hoc tap\Năm 4\Kỳ 1\Project5\Back-End\Back-End\bin\Debug\netcoreapp3.1\Model.pdb
 E:\Hoc tap\Năm 4\Kỳ 1\Project5\Back-End\Back-End\bin\Debug\netcoreapp3.1\DAL.pdb
 E:\Hoc tap\Năm 4\Kỳ 1\Project5\Back-End\Back-End\obj\Debug\netcoreapp3.1\Back-End.csproj.CopyComplete
+E:\Hoc tap\Năm 4\Kỳ 1\Project5\Back-End\Back-End\bin\Debug\netcoreapp3.1\Back-End.deps.json
+E:\Hoc tap\Năm 4\Kỳ 1\Project5\Back-End\Back-End\bin\Debug\netcoreapp3.1\Back-End.runtimeconfig.json
+E:\Hoc tap\Năm 4\Kỳ 1\Project5\Back-End\Back-End\bin\Debug\netcoreapp3.1\Back-End.runtimeconfig.dev.json
+E:\Hoc tap\Năm 4\Kỳ 1\Project5\Back-End\Back-End\bin\Debug\netcoreapp3.1\Back-End.dll
+E:\Hoc tap\Năm 4\Kỳ 1\Project5\Back-End\Back-End\bin\Debug\netcoreapp3.1\Back-End.pdb
+E:\Hoc tap\Năm 4\Kỳ 1\Project5\Back-End\Back-End\obj\Debug\netcoreapp3.1\Back-End.dll
+E:\Hoc tap\Năm 4\Kỳ 1\Project5\Back-End\Back-End\obj\Debug\netcoreapp3.1\Back-End.pdb
+E:\Hoc tap\Năm 4\Kỳ 1\Project5\Back-End\Back-End\obj\Debug\netcoreapp3.1\Back-End.genruntimeconfig.cache

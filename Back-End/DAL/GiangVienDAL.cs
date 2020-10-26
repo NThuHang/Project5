@@ -1,0 +1,121 @@
+﻿using DAL.Helper;
+using Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace DAL
+{
+    public partial class GiangVienDAL : IGiangVienDAL
+    {
+        private IDatabaseHelper _dbHelper;
+        public GiangVienDAL(IDatabaseHelper dbHelper)
+        {
+            _dbHelper = dbHelper;
+        }
+
+        public List<GiangVienModel> GetData()
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "gv_getAll");
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<GiangVienModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public GiangVienModel GetDatabyID(string id)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "gv_getID",
+                     "@ID_GV", id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<GiangVienModel>().FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool Create(GiangVienModel model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "gv_create",
+                "@ID_GV", model.ID_GV,
+                "@HoTen", model.HoTen,
+                "@NgaySinh", model.NgaySinh,
+                "@QueQuan", model.QueQuan,
+                "@Sđt", model.Sđt,
+                "@Email", model.Email,
+                "@DiaChi", model.DiaChi,
+                "@GioiTinh", model.GioiTinh);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool Delete(string id)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "gv_delete",
+                "@ID_GV", id);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool Update(GiangVienModel model)
+        {
+            string msgError = "";
+            try
+            {
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "gv_update",
+                "@ID_GV", model.ID_GV,
+                "@HoTen", model.HoTen,
+                "@NgaySinh", model.NgaySinh,
+                "@QueQuan", model.QueQuan,
+                "@Sđt", model.Sđt,
+                "@Email", model.Email,
+                "@DiaChi", model.DiaChi,
+                "@GioiTinh", model.GioiTinh);
+                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
+                {
+                    throw new Exception(Convert.ToString(result) + msgError);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
+    }
+}

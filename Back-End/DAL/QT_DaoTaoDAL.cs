@@ -38,7 +38,7 @@ namespace DAL
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "qtdt_create",
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "daotao_create",
                 "@ID_DT", model.ID_DT,
                 "@ID_GV", model.ID_GV,
                 "@Ten_DT", model.Ten_DT,
@@ -62,7 +62,7 @@ namespace DAL
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "gv_delete",
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "daotao_delete",
                 "@ID_DT", id);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
@@ -80,7 +80,7 @@ namespace DAL
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "gv_update",
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "daotao_update",
                 "@ID_DT", model.ID_DT,
                 "@ID_GV", model.ID_GV,
                 "@Ten_DT", model.Ten_DT,

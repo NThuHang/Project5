@@ -11,7 +11,7 @@ namespace Model
         public string Ten_DT { get; set; }
         public string ND_DT { get; set; }
         public string ChuyenMon { get; set; }
-        public string ThoiGian { get; set; }
+        public DateTime? ThoiGian { get; set; }
 
     }
 }

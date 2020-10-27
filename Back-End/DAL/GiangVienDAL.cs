@@ -116,6 +116,26 @@ namespace DAL
                 throw ex;
             }
         }
-        
+
+        public List<GiangVienModel> Search(int pageIndex, int pageSize, out long total, string hoten)
+        {
+            string msgError = "";
+            total = 0;
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "gv_search",
+                    "@page_index", pageIndex,
+                    "@page_size", pageSize,
+                     "@hoten", hoten);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
+                return dt.ConvertTo<GiangVienModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

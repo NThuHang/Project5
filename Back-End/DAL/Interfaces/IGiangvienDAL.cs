@@ -12,6 +12,6 @@ namespace DAL
         bool Create(GiangVienModel model);
         bool Update(GiangVienModel model);
         bool Delete(string id);
-        //List<GiangVienModel> Search(int pageIndex, int pageSize, out long total, string hoten, string taikhoan);
+        List<GiangVienModel> Search(int pageIndex, int pageSize, out long total, string hoten);
     }
 }

@@ -35,6 +35,11 @@ namespace BLL
         {
             return _res.GetDatabyID(id);
         }
+
+        public List<GiangVienModel> Search(int pageIndex, int pageSize, out long total, string hoten)
+        {
+            return _res.Search(pageIndex, pageSize, out total, hoten);
+        }
     }
 
 }

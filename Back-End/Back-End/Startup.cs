@@ -67,6 +67,8 @@ namespace Back_End
 
             services.AddControllers();
             services.AddTransient<IDatabaseHelper, DatabaseHelper>();
+            services.AddTransient<IDanhMucDAL, DanhMucDAL>();
+            services.AddTransient<IDanhMucBLL, DanhMucBLL>();
             services.AddTransient<IGiangVienDAL, GiangVienDAL>();
             services.AddTransient<IGiangVienBLL, GiangVienBLL>();
         }

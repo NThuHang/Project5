@@ -1,0 +1,30 @@
+<div class="left-sidebar-pro">
+	<nav id="sidebar" class="">
+		<div class="sidebar-header">
+			<a href=""><img class="main-logo" src="assets/img/logo/logo.png" alt="" /></a> <strong><a href=""><img src="assets/img/logo/logosn.png" alt="" /></a></strong> </div>
+		<div class="left-custom-menu-adp-wrap comment-scrollbar">
+			<nav class="sidebar-nav left-sidebar-menu-pro">
+				<ul class="metismenu" id="menu1">
+          <ng-container *ngFor="let mn of menus">
+            <li *ngIf="mn.dM_Con != null">
+              <a class="has-arrow" href="{{mn.url}}">
+                <span class="educate-icon {{mn.icon}} icon-wrap"></span>
+                <span class="mini-click-non">{{mn.ten_DM}}</span>
+              </a>
+              <ul class="submenu-angle" aria-expanded="true">
+                <ng-container *ngFor="let m of mn.dM_Con">
+                  <li><a href="{{m.url}}" >
+                    <span class="mini-sub-pro">{{m.ten_DM}}</span></a></li>
+                </ng-container>
+              </ul>
+            </li>
+            <li *ngIf="mn.dM_Con == null"> <a href="{{mn.url}}" aria-expanded="false" class="active">
+              <span class="educate-icon {{mn.icon}} icon-wrap sub-icon-mg" aria-hidden="true"></span>
+              <span class="mini-click-non">{{mn.ten_DM}}</span></a>
+            </li>
+          </ng-container>
+    		</ul>
+			</nav>
+		</div>
+	</nav>
+</div>

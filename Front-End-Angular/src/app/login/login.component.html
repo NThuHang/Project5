@@ -1,0 +1,40 @@
+<div class="error-pagewrap">
+	<div class="error-page-int">
+		<div class="text-center m-b-md custom-login">
+			<h3>ĐĂNG NHẬP HỆ THỐNG</h3>
+			<p>QUẢN LÝ DỮ LIỆU KHOA HỌC</p>
+		</div>
+		<div class="content-error">
+			<div class="hpanel">
+				<div class="panel-body">
+					<form [formGroup]='loginForm' (ngSubmit)="onSubmit()">
+						<div class="form-group">
+							<label class="control-label" for="username">Tên đăng nhập</label>
+              <input type="text" placeholder="email@gmail.com" formControlName="username" class="form-control">
+              <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                <div *ngIf="f.username.errors.required">Chưa nhập tài khoản!</div>
+              </div>
+            </div>
+						<div class="form-group">
+							<label class="control-label" for="password">Mật khẩu</label>
+              <input type="password" placeholder="******" formControlName="password" class="form-control">
+              <!-- <span class="help-block small">Mật khẩu của bạn</span> -->
+              <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">Chưa nhập mật khẩu!</div>
+              </div>
+            </div>
+						<div class="checkbox login-checkbox">
+							<label>
+                <input formControlName="remember" type="checkbox" class="i-checks"> Ghi nhớ
+              </label>
+						</div>
+						<button [disabled]="loginForm.invalid || loading" type="submit" class="btn btn-success btn-block loginbtn">Đăng Nhập</button>
+          </form>
+				</div>
+			</div>
+		</div>
+		<div class="text-center login-footer">
+      <p>Quản lý dữ liệu khoa học © 2020. Nguyễn Thu Hằng </p>
+		</div>
+	</div>
+</div>

@@ -20,7 +20,7 @@ namespace DAL
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "menu_getAll");
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "lay_menu");
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<DanhMucModel>().ToList();

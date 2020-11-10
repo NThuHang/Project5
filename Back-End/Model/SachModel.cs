@@ -4,7 +4,13 @@ using System.Text;
 
 namespace Model
 {
-    class SachModel
+    public class SachModel
     {
+        public string ID_Sach { get; set; }
+        public string ID_LoaiS { get; set; }
+        public string Ten_Sach { get; set; }
+        public string Noi_XB { get; set; }
+        public string Nam_XB { get; set; }
+        public string ISBN { get; set; }
     }
 }

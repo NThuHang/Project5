@@ -4,7 +4,9 @@ using System.Text;
 
 namespace Model
 {
-    class Loai_TapChiModel
+    public class Loai_TapChiModel
     {
+        public string ID_LoaiTC { get; set; }
+        public string Ten_Loai { get; set; }
     }
 }

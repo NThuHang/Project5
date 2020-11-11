@@ -57,7 +57,7 @@ namespace DAL
                 "@HoTen", model.HoTen,
                 "@NgaySinh", model.NgaySinh,
                 "@QueQuan", model.QueQuan,
-                "@Sđt", model.Sđt,
+                "@Sdt", model.Sdt,
                 "@Email", model.Email,
                 "@DiaChi", model.DiaChi,
                 "@GioiTinh", model.GioiTinh);
@@ -101,7 +101,7 @@ namespace DAL
                 "@HoTen", model.HoTen,
                 "@NgaySinh", model.NgaySinh,
                 "@QueQuan", model.QueQuan,
-                "@Sđt", model.Sđt,
+                "@Sdt", model.Sdt,
                 "@Email", model.Email,
                 "@DiaChi", model.DiaChi,
                 "@GioiTinh", model.GioiTinh);

@@ -1,17 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { GiangvienComponent } from './giangvien/giangvien.component';
-import { QtDaotaoComponent } from './qt-daotao/qt-daotao.component';
-import { QtCongtacComponent } from './qt-congtac/qt-congtac.component';
-import { NgoainguComponent } from './ngoaingu/ngoaingu.component';
-import { TinhocComponent } from './tinhoc/tinhoc.component';
-
-
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
-  declarations: [GiangvienComponent, QtDaotaoComponent, QtCongtacComponent, NgoainguComponent, TinhocComponent],
+  declarations: [GiangvienComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule,
+    RouterModule.forChild([
+      {
+        path: 'giangvien',
+        component: GiangvienComponent,
+      },
+    ]),
   ]
 })
 export class QlGiangvienModule { }
+
+

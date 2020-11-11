@@ -12,7 +12,7 @@ using Model;
 
 namespace API.Controllers
 {
-    [Authorize]
+   
     [ApiController]
     [Route("api/[controller]")]
     public class GiangVienController : ControllerBase
@@ -53,7 +53,7 @@ namespace API.Controllers
 
         [Route("get-all")]
         [HttpGet]
-        public IEnumerable<GiangVienModel> GetDatabAll()
+        public IEnumerable<GiangVienModel> GetDataAll()
         {
             return _giangVienBLL.GetData();
         }

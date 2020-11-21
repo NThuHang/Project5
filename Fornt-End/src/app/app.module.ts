@@ -10,11 +10,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './lib/error.interceptor';
 import { JwtInterceptor } from './lib/jwt.interceptor';
-
+import { TaikhoanComponent } from './ql-taikhoan/taikhoan/taikhoan.component';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    TaikhoanComponent,
   ],
   imports: [
     SharedModule,
@@ -25,8 +26,8 @@ import { JwtInterceptor } from './lib/jwt.interceptor';
     AppRoutingModule
   ],
   providers: [
-    // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

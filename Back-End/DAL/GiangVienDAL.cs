@@ -1,9 +1,10 @@
 ﻿using DAL.Helper;
 using Model;
-using System;
+using Helper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System;
 
 namespace DAL
 {
@@ -55,12 +56,14 @@ namespace DAL
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "gv_create",
                 "@ID_GV", model.ID_GV,
                 "@HoTen", model.HoTen,
+                "@HinhAnh", model.HinhAnh,
                 "@NgaySinh", model.NgaySinh,
+                "@GioiTinh", model.GioiTinh,
                 "@QueQuan", model.QueQuan,
-                "@Sdt", model.Sdt,
-                "@Email", model.Email,
                 "@DiaChi", model.DiaChi,
-                "@GioiTinh", model.GioiTinh);
+                "@Sdt", model.Sdt,
+                "@Email", model.Email
+                );
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -99,12 +102,13 @@ namespace DAL
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "gv_update",
                 "@ID_GV", model.ID_GV,
                 "@HoTen", model.HoTen,
+                "@HinhAnh", model.HinhAnh,
                 "@NgaySinh", model.NgaySinh,
+                "@GioiTinh", model.GioiTinh,
                 "@QueQuan", model.QueQuan,
-                "@Sdt", model.Sdt,
-                "@Email", model.Email,
                 "@DiaChi", model.DiaChi,
-                "@GioiTinh", model.GioiTinh);
+                "@Sdt", model.Sdt,
+                "@Email", model.Email);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);

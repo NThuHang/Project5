@@ -67,13 +67,23 @@ namespace API.Controllers
 
         [Route("create-gv")]
         [HttpPost]
-        public GiangVienModel CreateItem([FromBody] GiangVienModel model)
+        public GiangVienModel CreateGV([FromBody] GiangVienModel model)
         {
+            if (model.HinhAnh != null)
+            {
+                var arrData = model.HinhAnh.Split(';');
+                if (arrData.Length == 3)
+                {
+                    var savePath = $@"assets/img/giangvien/{arrData[0]}";
+                    model.HinhAnh = $"{savePath}";
+                    SaveFileFromBase64String(savePath, arrData[2]);
+                }
+            }
+            model.ID_GV = Guid.NewGuid().ToString();
             _giangVienBLL.Create(model);
             return model;
         }
-
-        [Route("delete-user")]
+        [Route("delete-gv")]
         [HttpPost]
         public IActionResult DeleteUser([FromBody] Dictionary<string, object> formData)
         {
@@ -85,10 +95,20 @@ namespace API.Controllers
             return Ok();
         }
 
-        [Route("update-user")]
+        [Route("update-gv")]
         [HttpPost]
         public GiangVienModel UpdateUser([FromBody] GiangVienModel model)
         {
+            if (model.HinhAnh != null)
+            {
+                var arrData = model.HinhAnh.Split(';');
+                if (arrData.Length == 3)
+                {
+                    var savePath = $@"assets/img/giangvien/{arrData[0]}";
+                    model.HinhAnh = $"{savePath}";
+                    SaveFileFromBase64String(savePath, arrData[2]);
+                }
+            }
             _giangVienBLL.Update(model);
             return model;
         }

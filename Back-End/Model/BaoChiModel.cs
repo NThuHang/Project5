@@ -11,6 +11,6 @@ namespace Model
         public string Trang_BD { get; set; }
         public string Trang_KT { get; set; }
         public string ID_TapChi { get; set; }
-        public string TG_XB { get; set; }
+        public DateTime? TG_XB { get; set; }
     }
 }

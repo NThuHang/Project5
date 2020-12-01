@@ -53,7 +53,7 @@
                  <div class="col-md-6 ml-auto">
                   <div class="form-group">
                     <div class="input-group">
-                      <input formControlName="hoten" type="text" class="form-control" placeholder="Tìm kiếm " aria-label="" aria-describedby="basic-addon1">
+                      <input formControlName="ten" type="text" class="form-control" placeholder="Tìm kiếm " aria-label="" aria-describedby="basic-addon1">
                       <div class="input-group-prepend">
                         <button (click)="search()" class="btn btn-sm btn-primary">Tìm kiếm</button>
                       </div>
@@ -74,8 +74,8 @@
                  <ng-template pTemplate="body" let-item  let-i="rowIndex">
                     <tr>
                        <td style="width: 70px; text-align: center;">{{ i + 1 }}</td>
-                       <td>{{ item.hoTen }}</td>
-                       <td>{{ item.diaChi }}</td>
+                       <td>{{ item.ten_BBao }}</td>
+                       <td>{{ item.iD_TapChi }}</td>
                        <td>
                           <button (click)="openUpdateModal(item)" data-toggle="tooltip" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
                             <i class="fa fa-edit"></i>
@@ -106,7 +106,7 @@
   </div>
 </div>
 <!-- Modal -->
-<div *ngIf="showUpdateModal" id="createUserModal" class="modal fade" role="dialog">
+<div *ngIf="showUpdateModal" id="createModal" class="modal fade" role="dialog">
   <div class="modal-dialog modal-lg full-height-modal ">
      <div class="modal-content">
         <div class="modal-header">
@@ -119,83 +119,64 @@
         <form *ngIf="doneSetupForm" [formGroup]="formdata"  (ngSubmit)="onSubmit(formdata.value)" class="form-horizontal utehy-form">
         <div class="modal-body no-padding">
           <div class="row">
-            <div class="col-12"  *ngIf="isCreate" >
-              <div class="form-group">
-                <label class="control-label no-padding-right"> Mã (
-                  <span style="color: red;">*</span>)
-                </label>
-                <input type="text" class=" form-control" placeholder="Mã" formControlName="iD_GV"/>
-                <small class="form-text text-muted" *ngIf="submitted && f.iD_GV.errors">
-                  <i style="color: red;" *ngIf="f.iD_GV.errors.required">Hãy nhập thông tin họ tên</i>
-                </small>
-              </div>
-            </div>
             <div class="col-12">
               <div class="form-group">
                 <label class="control-label no-padding-right"> Họ tên (
                   <span style="color: red;">*</span>)
                 </label>
-                <input type="text" class=" form-control" placeholder="Họ tên" formControlName="hoTen"/>
-                <small class="form-text text-muted" *ngIf="submitted && f.hoTen.errors">
-                  <i style="color: red;" *ngIf="f.hoTen.errors.required">Hãy nhập thông tin họ tên</i>
+                <input type="text" class=" form-control" placeholder="Họ tên" formControlName="ten_BBao"/>
+                <small class="form-text text-muted" *ngIf="submitted && f.ten_BBao.errors">
+                  <i style="color: red;" *ngIf="f.ten_BBao.errors.required">Hãy nhập thông tin họ tên</i>
                 </small>
               </div>
             </div>
             <div class="col-6">
               <div class="form-group">
-                <label class="control-label no-padding-right"> Ngày sinh (<span style="color: red;">*</span>)</label><br>
-                <input type="text" class=" form-control" placeholder="Họ tên" formControlName="ngaySinh"/>
-                <!-- <p-calendar formControlName="ngaySinh" [dateFormat]="dateFormat"  [locale]="locale_vn" [showIcon]="true" inputId="icon"></p-calendar> -->
-                <small class="form-text text-muted" *ngIf="submitted && f.ngaySinh.errors">
-                  <i style="color: red;" *ngIf="f.ngaySinh.errors.required">Hãy nhập ngày sinh</i>
-                </small>
-              </div>
-              <div class="form-group">
-                <label class="control-label no-padding-right"> Email (
+                <label class="control-label no-padding-right"> Loại tạp chí (
                   <span style="color: red;">*</span>)
                 </label>
-                <input type="email" class=" form-control" placeholder="Email" formControlName="email"/>
-                <small class="form-text text-muted" *ngIf="submitted && f.email.errors">
-                  <i style="color: red;" *ngIf="f.email.errors.required">Hãy nhập thông tin họ tên</i>
+                <select formControlName="iD_Loai" class="form-control form-control" id="defaultSelect">
+                  <option value="">Chọn loại tạp chí</option>
+                  <option *ngFor="let item of baochi" [value]="baochi.iD_Loai">1</option>
+                </select>
+                <small class="form-text text-muted" *ngIf="submitted && f.ten_BBao.errors">
+                  <i style="color: red;" *ngIf="f.ten_BBao.errors.required">Hãy chọn thông tin loại tạp chí</i>
                 </small>
               </div>
             </div>
             <div class="col-6">
               <div class="form-group">
-                <label class="control-label no-padding-right"> Giới tính (
+                <label class="control-label no-padding-right"> Tạp chí (
                   <span style="color: red;">*</span>)
                 </label>
-                <p-dropdown [options]="genders" formControlName="gioiTinh" [style]="{'width':'100%'}"></p-dropdown>
-                <small class="form-text text-muted" *ngIf="submitted && f.gioiTinh.errors">
-                  <i style="color: red;" *ngIf="f.gioiTinh.errors.required">Hãy chọn giới tính</i>
-                </small>
-              </div>
-              <div class="form-group">
-                <label class="control-label no-padding-right"> Số điện thoại (
-                  <span style="color: red;">*</span>)
-                </label>
-                <input type="number" class=" form-control" placeholder="Số điện thoại" formControlName="sdt"/>
-                <small class="form-text text-muted" *ngIf="submitted && f.sdt.errors">
-                  <i style="color: red;" *ngIf="f.sdt.errors.required">Hãy nhập thông tin Số điện thoại</i>
+                <select formControlName="iD_TapChi"  class="form-control form-control" id="defaultSelect">
+                  <option value="">Chọn tạp chí</option>
+                  <option *ngFor="let item of baochi" [value]="baochi.iD_TapChi">2</option>
+                </select>
+                <small class="form-text text-muted" *ngIf="submitted && f.ten_BBao.errors">
+                  <i style="color: red;" *ngIf="f.ten_BBao.errors.required">Hãy chọn tạp chí</i>
                 </small>
               </div>
             </div>
-            <div class="col-12">
+            <div class="col-6">
               <div class="form-group">
-                <label class="control-label no-padding-right"> Địa chỉ (
+                <label class="control-label no-padding-right"> Trang bắt đầu (
                   <span style="color: red;">*</span>)
                 </label>
-                <input type="text" class=" form-control" placeholder="Địa chỉ" formControlName="diaChi"/>
-                <small class="form-text text-muted" *ngIf="submitted && f.diaChi.errors">
-                  <i style="color: red;" *ngIf="f.diaChi.errors.required">Hãy nhập thông tin dịa chỉ</i>
+                <input type="number" class=" form-control" placeholder="Trang bắt đầu" formControlName="trang_BD"/>
+                <small class="form-text text-muted" *ngIf="submitted && f.trang_BD.errors">
+                  <i style="color: red;" *ngIf="f.trang_BD.errors.required">Hãy nhập thông tin trang bắt đầu</i>
                 </small>
               </div>
+            </div>
+            <div class="col-6">
               <div class="form-group">
-                <label class="control-label no-padding-right"> Quê quán  </label>
-                <textarea class="form-control" id="comment" rows="3">
-                </textarea>
-                <small class="form-text text-muted">
-                  <i>Hãy nhập thông tin họ tên</i>
+                <label class="control-label no-padding-right"> Trang kết thúc (
+                  <span style="color: red;">*</span>)
+                </label>
+                <input type="number" class=" form-control" placeholder="Trang kết thúc" formControlName="trang_BD"/>
+                <small class="form-text text-muted" *ngIf="submitted && f.trang_BD.errors">
+                  <i style="color: red;" *ngIf="f.trang_BD.errors.required">Hãy nhập thông tin trang kết thúc</i>
                 </small>
               </div>
             </div>
@@ -203,7 +184,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" (click)="Reset()"> Làm mới</button>
-          <button type="submit" class="btn btn-success" id="alert_demo_3.3">Lưu lại</button>
+          <button type="submit" class="btn btn-success">Lưu lại</button>
           <button type="button" class="btn btn-danger" (click)="closeModal()"> Đóng lại</button>
         </div>
         </form>

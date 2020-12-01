@@ -12,7 +12,7 @@ namespace BLL
         bool Update(BaoChiModel model);
         bool Delete(string id);
         BaoChiModel GetDatabyID(string id);
-        List<BaoChiModel> Search(int pageIndex, int pageSize, out long total, string hoten);
+        List<BaoChiModel> Search(int pageIndex, int pageSize, out long total, string ten);
     }
 }
 

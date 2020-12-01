@@ -34,6 +34,5 @@ namespace Back_End.Controllers
 
             return Ok(taikhoan);
         }
-        
     }
 }

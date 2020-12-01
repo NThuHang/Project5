@@ -40,6 +40,10 @@ namespace BLL
         {
             return _res.Search(pageIndex, pageSize, out total, hoten);
         }
+        public GiangVienModel Get_ThongTin_TK(string id)
+        {
+            return _res.Get_ThongTin_TK(id);
+        }
     }
 
 }

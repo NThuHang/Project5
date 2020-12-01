@@ -36,9 +36,9 @@ namespace BLL
             return _res.GetDatabyID(id);
         }
 
-        public List<BaoChiModel> Search(int pageIndex, int pageSize, out long total, string hoten)
+        public List<BaoChiModel> Search(int pageIndex, int pageSize, out long total, string ten)
         {
-            return _res.Search(pageIndex, pageSize, out total, hoten);
+            return _res.Search(pageIndex, pageSize, out total, ten);
         }
     }
 

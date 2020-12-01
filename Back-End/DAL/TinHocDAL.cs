@@ -1,9 +1,10 @@
 ﻿using DAL.Helper;
 using Model;
-using System;
+using Helper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System;
 
 namespace DAL
 {
@@ -15,17 +16,31 @@ namespace DAL
             _dbHelper = dbHelper;
         }
 
-        // Lấy thông tin ngoại ngữ theo ID giảng viên
-        public List<TinHocModel> GetData_GV(string id)
+        public List<TinHocModel> GetData()
         {
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "TinHoc_get_gv",
-                     "@ID_GV", id);
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "TinHoc_getAll");
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<TinHocModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public TinHocModel GetDatabyID(string id)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "TinHoc_getID",
+                     "@ID_BBao", id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<TinHocModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -39,11 +54,12 @@ namespace DAL
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "TinHoc_create",
-                "@ID_TH", model.ID_TH,
+               "@ID_TH", model.ID_TH,
                 "@ID_GV", model.ID_GV,
                 "@Ten_TinHoc", model.Ten_TinHoc,
                 "@TrinhDo", model.TrinhDo,
-                "@ChungChi", model.ChungChi);
+                "@ChungChi", model.ChungChi
+                );
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -55,14 +71,13 @@ namespace DAL
                 throw ex;
             }
         }
-
         public bool Delete(string id)
         {
             string msgError = "";
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "TinHoc_delete",
-                "@ID_DT", id);
+                "@ID_BBao", id);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -90,6 +105,27 @@ namespace DAL
                     throw new Exception(Convert.ToString(result) + msgError);
                 }
                 return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<TinHocModel> Search(int pageIndex, int pageSize, out long total, string ten)
+        {
+            string msgError = "";
+            total = 0;
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "TinHoc_search",
+                    "@page_index", pageIndex,
+                    "@page_size", pageSize,
+                     "@ten", ten);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
+                return dt.ConvertTo<TinHocModel>().ToList();
             }
             catch (Exception ex)
             {

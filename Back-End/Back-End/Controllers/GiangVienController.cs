@@ -74,7 +74,7 @@ namespace API.Controllers
                 var arrData = model.HinhAnh.Split(';');
                 if (arrData.Length == 3)
                 {
-                    var savePath = $@"assets/img/giangvien/{arrData[0]}";
+                    var savePath = $@"assets/hinhanh/{arrData[0]}";
                     model.HinhAnh = $"{savePath}";
                     SaveFileFromBase64String(savePath, arrData[2]);
                 }
@@ -104,7 +104,7 @@ namespace API.Controllers
                 var arrData = model.HinhAnh.Split(';');
                 if (arrData.Length == 3)
                 {
-                    var savePath = $@"assets/img/giangvien/{arrData[0]}";
+                    var savePath = $@"assets/hinhanh/{arrData[0]}";
                     model.HinhAnh = $"{savePath}";
                     SaveFileFromBase64String(savePath, arrData[2]);
                 }
@@ -140,5 +140,11 @@ namespace API.Controllers
             }
             return response;
         }
-    }
+        [Route("get-thongtin/{id}")]
+        [HttpGet]
+        public GiangVienModel Get_ThongTin_TK(string id)
+        {
+            return _giangVienBLL.Get_ThongTin_TK(id);
+        }
+}
 }

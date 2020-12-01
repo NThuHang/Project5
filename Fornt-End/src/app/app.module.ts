@@ -11,11 +11,13 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './lib/error.interceptor';
 import { JwtInterceptor } from './lib/jwt.interceptor';
 import { TaikhoanComponent } from './ql-taikhoan/taikhoan/taikhoan.component';
+import { DangkyComponent } from './login/dangky/dangky.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     TaikhoanComponent,
+    DangkyComponent,
   ],
   imports: [
     SharedModule,

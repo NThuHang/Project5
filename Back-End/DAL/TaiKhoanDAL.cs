@@ -32,5 +32,21 @@ namespace DAL
                 throw ex;
             }
         }
+        public TaiKhoanModel GetThongTin(string id)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "taikhoan_getAll_ID_giangvien",
+                     "@ID", id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<TaiKhoanModel>().FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

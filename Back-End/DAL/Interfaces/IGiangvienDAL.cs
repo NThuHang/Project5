@@ -9,6 +9,7 @@ namespace DAL
     {
         List<GiangVienModel> GetData();
         GiangVienModel GetDatabyID(string id);
+        GiangVienModel Get_ThongTin_TK(string id);
         bool Create(GiangVienModel model);
         bool Update(GiangVienModel model);
         bool Delete(string id);

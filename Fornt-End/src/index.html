@@ -107,9 +107,19 @@
 		jQuery(document).ready(function() {
 			SweetAlert2Demo.init();
 		});
-	</script>
+  </script>
+  <script>
+    function showPassword(){
+      var x = document.getElementById("Password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+  </script>
 </head>
-<body>
+<body class="login-page" cz-shortcut-listen="true">
   <app-root></app-root>
 </body>
 </html>

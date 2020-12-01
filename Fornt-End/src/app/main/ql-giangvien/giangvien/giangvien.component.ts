@@ -19,6 +19,7 @@ export class GiangvienComponent extends BaseComponent implements OnInit {
   public uploadedFiles: any[] = [];
   public formsearch: any;
   public formdata: any;
+  public formload: any;
   public doneSetupForm: any;
   public showUpdateModal:any;
   public isCreate:any;
@@ -45,11 +46,12 @@ export class GiangvienComponent extends BaseComponent implements OnInit {
   search() {
     this.page = 1;
     this.pageSize = 5;
-    this._api.post('/api/giangvien/search',{page: this.page, pageSize: this.pageSize, hoten: this.formsearch.get('hoten').value}).takeUntil(this.unsubscribe).subscribe(res => {
+    this._api.post('/api/giangvien/search',{page: this.page, pageSize: this.pageSize , hoten: this.formsearch.get('hoten').value}).takeUntil(this.unsubscribe).subscribe(res => {
       this.giangviens = res.data;
       this.totalRecords =  res.totalItems;
       this.pageSize = res.pageSize;
       });
+      console.log(this.pageSize);
   }
 
   get f() { return this.formdata.controls; }
@@ -68,14 +70,15 @@ export class GiangvienComponent extends BaseComponent implements OnInit {
           DiaChi:value.diaChi,
           GioiTinh:value.gioiTinh,
           Email:value.email,
-          NgaySinh:value.ngaySinh ,
-          Sdt:value.sdt ,
-          QueQuan:value.queQuan
+          NgaySinh:value.ngaySinh,
+          Sdt:value.sdt,
+          QueQuan:value.queQuan,
           };
         this._api.post('/api/giangvien/create-gv',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Thêm thành công');
           this.search();
           this.closeModal();
+          console.log(this.isCreate);
           });
       });
     } else {
@@ -87,10 +90,10 @@ export class GiangvienComponent extends BaseComponent implements OnInit {
           DiaChi:value.diaChi,
           GioiTinh:value.gioiTinh,
           Email:value.email,
-          NgaySinh:value.ngaySinh ,
-          Sdt:value.sdt ,
-          QueQuan:value.queQuan ,
-          ID_GV:this.giangvien.iD_GV
+          NgaySinh:value.ngaySinh,
+          Sdt:value.sdt,
+          QueQuan:value.queQuan,
+          ID_GV:this.giangvien.iD_GV,
         };
         this._api.post('/api/giangvien/update-gv',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Cập nhật thành công');
@@ -113,11 +116,10 @@ export class GiangvienComponent extends BaseComponent implements OnInit {
   Reset() {
     this.giangvien = null;
     this.formdata = this.fb.group({
-      'iD_GV': ['', Validators.required],
       'hoTen': ['', Validators.required],
       'hinhAnh': ['', Validators.required],
-      'ngaySinh': ['', Validators.required],
-      'gioiTinh': ['', Validators.required],
+      'ngaySinh': [this.today, Validators.required],
+      'gioiTinh': [this.genders[0].value, Validators.required],
       'queQuan': [''],
       'diaChi': ['', Validators.required],
       'sdt': ['', Validators.required],
@@ -133,7 +135,6 @@ export class GiangvienComponent extends BaseComponent implements OnInit {
     setTimeout(() => {
       $('#createUserModal').modal('toggle');
       this.formdata = this.fb.group({
-        'iD_GV': ['', Validators.required],
         'hoTen': ['', Validators.required],
         'hinhAnh': [''],
         'ngaySinh': ['', Validators.required],
@@ -143,6 +144,8 @@ export class GiangvienComponent extends BaseComponent implements OnInit {
         'sdt': ['', Validators.required],
         'email': ['', [Validators.required,Validators.email]],
       });
+      this.formdata.get('ngaySinh').setValue(this.today);
+      this.formdata.get('gioiTinh').setValue(this.genders[0].value);
       this.doneSetupForm = true;
     });
   }
@@ -155,12 +158,11 @@ export class GiangvienComponent extends BaseComponent implements OnInit {
       $('#createUserModal').modal('toggle');
       this._api.get('/api/giangvien/get-by-id/'+ row.iD_GV).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.giangvien = res;
-
+        let ngaySinh = new Date(this.giangvien.ngaySinh);
           this.formdata = this.fb.group({
-            'iD_GV': [this.giangvien.iD_GV, Validators.required],
             'hoTen': [this.giangvien.hoTen, Validators.required],
             'hinhAnh': [this.giangvien.hinhAnh],
-            'ngaySinh': [this.giangvien.ngaySinh, Validators.required],
+            'ngaySinh': [ngaySinh, Validators.required],
             'gioiTinh': [this.giangvien.gioiTinh, Validators.required],
             'queQuan': [this.giangvien.queQuan],
             'diaChi': [this.giangvien.diaChi, Validators.required],

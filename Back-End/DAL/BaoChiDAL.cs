@@ -37,7 +37,7 @@ namespace DAL
             try
             {
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "baochi_getID",
-                     "@ID_baochi", id);
+                     "@ID_BBao", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<BaoChiModel>().FirstOrDefault();
@@ -72,14 +72,13 @@ namespace DAL
                 throw ex;
             }
         }
-
         public bool Delete(string id)
         {
             string msgError = "";
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "baochi_delete",
-                "@ID_baochi", id);
+                "@ID_BBao", id);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -115,7 +114,7 @@ namespace DAL
             }
         }
 
-        public List<BaoChiModel> Search(int pageIndex, int pageSize, out long total, string hoten)
+        public List<BaoChiModel> Search(int pageIndex, int pageSize, out long total, string ten)
         {
             string msgError = "";
             total = 0;
@@ -124,7 +123,7 @@ namespace DAL
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "baochi_search",
                     "@page_index", pageIndex,
                     "@page_size", pageSize,
-                     "@hoten", hoten);
+                     "@ten", ten);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];

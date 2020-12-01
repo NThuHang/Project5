@@ -14,9 +14,9 @@ namespace BLL
         {
             _res = ItemGroupRes;
         }
-        public List<TinHocModel> GetData_GV(string id)
+        public List<TinHocModel> GetData()
         {
-            return _res.GetData_GV(id);
+            return _res.GetData();
         }
         public bool Create(TinHocModel model)
         {
@@ -31,6 +31,15 @@ namespace BLL
             return _res.Delete(id);
         }
 
+        public TinHocModel GetDatabyID(string id)
+        {
+            return _res.GetDatabyID(id);
+        }
+
+        public List<TinHocModel> Search(int pageIndex, int pageSize, out long total, string ten)
+        {
+            return _res.Search(pageIndex, pageSize, out total, ten);
+        }
     }
 
 }

@@ -47,14 +47,13 @@ namespace DAL
                 throw ex;
             }
         }
-
         public bool Create(GiangVienModel model)
         {
             string msgError = "";
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "gv_create",
-                "@ID_GV", model.ID_GV,
+                 "@ID_GV", model.ID_GV,
                 "@HoTen", model.HoTen,
                 "@HinhAnh", model.HinhAnh,
                 "@NgaySinh", model.NgaySinh,
@@ -135,6 +134,23 @@ namespace DAL
                     throw new Exception(msgError);
                 if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
                 return dt.ConvertTo<GiangVienModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public GiangVienModel Get_ThongTin_TK(string id)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "taikhoan_getAll_ID_giangvien",
+                     "@ID", id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<GiangVienModel>().FirstOrDefault();
             }
             catch (Exception ex)
             {

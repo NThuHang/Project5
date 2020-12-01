@@ -18,7 +18,6 @@ namespace API.Controllers
     public class BaoChiController : ControllerBase
     {
         private IBaoChiBLL _BaoChiBLL;
-        private string _path;
         public BaoChiController(IBaoChiBLL BaoChiBLL)
         {
             _BaoChiBLL = BaoChiBLL;
@@ -42,6 +41,7 @@ namespace API.Controllers
         [HttpPost]
         public BaoChiModel CreateItem([FromBody] BaoChiModel model)
         {
+            model.ID_BBao = Guid.NewGuid().ToString();
             _BaoChiBLL.Create(model);
             return model;
         }
@@ -73,13 +73,13 @@ namespace API.Controllers
             {
                 var page = int.Parse(formData["page"].ToString());
                 var pageSize = int.Parse(formData["pageSize"].ToString());
-                string hoten = "";
+                string ten = "";
                 if (formData.Keys.Contains("ten") && !string.IsNullOrEmpty(Convert.ToString(formData["ten"])))
                 { 
-                    hoten = Convert.ToString(formData["ten"]); 
+                    ten = Convert.ToString(formData["ten"]); 
                 }
                 long total = 0;
-                var data = _BaoChiBLL.Search(page, pageSize, out total, hoten);
+                var data = _BaoChiBLL.Search(page, pageSize, out total, ten);
                 response.TotalItems = total;
                 response.Data = data;
                 response.Page = page;

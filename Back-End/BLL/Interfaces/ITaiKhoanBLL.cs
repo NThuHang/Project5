@@ -8,5 +8,6 @@ namespace BLL
     public partial interface ITaiKhoanBLL
     {
         TaiKhoanModel XacThuc(string username, string password);
+        TaiKhoanModel GetThongTin(string id);
     }
 }

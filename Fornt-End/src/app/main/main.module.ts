@@ -33,15 +33,15 @@ export const mainRoutes: Routes = [
         path: 'qlgiangvien',
         loadChildren: () =>
           import('./ql-giangvien/ql-giangvien.module').then((m) => m.QlGiangvienModule),
-          // canActivate: [RoleGuard],
-          // data: { Quyen: [Role.Admin] },
+          canActivate: [RoleGuard],
+          data: { Quyen: [Role.Admin] },
       },
       {
         path: 'qlbaochi',
         loadChildren: () =>
           import('./ql-baochi/ql-baochi.module').then((m) => m.QlBaochiModule),
-          // canActivate: [RoleGuard],
-          // data: { Quyen: [Role.Admin] },
+          canActivate: [RoleGuard],
+          data: { Quyen: [Role.Admin] },
       },
     ],
   },

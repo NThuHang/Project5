@@ -12,6 +12,6 @@ namespace DAL
         bool Create(BaoChiModel model);
         bool Update(BaoChiModel model);
         bool Delete(string id);
-        List<BaoChiModel> Search(int pageIndex, int pageSize, out long total, string hoten);
+        List<BaoChiModel> Search(int pageIndex, int pageSize, out long total, string ten);
     }
 }

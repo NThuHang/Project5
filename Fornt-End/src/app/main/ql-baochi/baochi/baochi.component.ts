@@ -119,7 +119,7 @@ export class BaochiComponent extends BaseComponent implements OnInit {
     this.isCreate = true;
     this.baochi = null;
     setTimeout(() => {
-      $('#createUserModal').modal('toggle');
+      $('#createModal').modal('toggle');
       this.formdata = this.fb.group({
         'iD_BBao': ['', Validators.required],
         'ten_BBao': ['', Validators.required],

@@ -7,9 +7,11 @@ namespace DAL
 {
     public partial interface INgoaiNguDAL
     {
-        List<NgoaiNguModel> GetData_GV(string id);
+        List<NgoaiNguModel> GetData();
+        NgoaiNguModel GetDatabyID(string id);
         bool Create(NgoaiNguModel model);
         bool Update(NgoaiNguModel model);
         bool Delete(string id);
+        List<NgoaiNguModel> Search(int pageIndex, int pageSize, out long total, string ten);
     }
 }

@@ -37,35 +37,40 @@
               </div>
            </div>
            <div class="card-body ">
-             <form class="form-horizontal" role="form" [formGroup]="formsearch"  (ngSubmit)="search()">
+
                <div class="row">
                  <div class="col-lg-2">
+                  <form class="form-horizontal" role="form" [formGroup]="formload">
                   <div class="form-group form-group-default">
                     <label>Số Dòng</label>
-                    <select class="form-control" id="formGroupDefaultSelect">
-                      <option>5</option>
-                      <option>10</option>
-                      <option>15</option>
-                      <option>20</option>
-                    </select>
+                    <input type="number" min="1" max="100" class="form-control" ng-model="pageSize">
+                    <!-- <select class="form-control" formControlName="hang" id="formGroupDefaultSelect" >
+                      <option value="3">5</option>
+                      <option value="5">10</option>
+                      <option value="15">15</option>
+                      <option value="20">20</option>
+                    </select> -->
                   </div>
+                  </form>
                  </div>
                  <div class="col-md-6 ml-auto">
                   <div class="form-group">
-                    <div class="input-group">
-                      <input formControlName="hoten" type="text" class="form-control" placeholder="Tìm kiếm " aria-label="" aria-describedby="basic-addon1">
-                      <div class="input-group-prepend">
-                        <button (click)="search()" class="btn btn-sm btn-primary">Tìm kiếm</button>
+                    <form class="form-horizontal" role="form" [formGroup]="formsearch"  (ngSubmit)="search()">
+                      <div class="input-group">
+                        <input formControlName="hoten" type="text" class="form-control" placeholder="Tìm kiếm " aria-label="" aria-describedby="basic-addon1">
+                        <div class="input-group-prepend">
+                          <button (click)="search()" class="btn btn-sm btn-primary">Tìm kiếm</button>
+                        </div>
                       </div>
-                    </div>
+                    </form>
                   </div>
                  </div>
                </div>
-              </form>
               <p-table selectionMode="single" [value]="giangviens" styleClass="p-datatable-gridlines">
                  <ng-template pTemplate="header">
                     <tr>
                        <th style="width: 70px; text-align: center;">STT</th>
+                       <th style="width: 80px; text-align: left;">Hình Ảnh</th>
                        <th style="width: 20%; text-align: left;">Họ Tên</th>
                        <th style="width: 20%; text-align: left;">Địa Chỉ</th>
                        <th style="width: 120px; text-align: left;">Tác vụ</th>
@@ -74,6 +79,7 @@
                  <ng-template pTemplate="body" let-item  let-i="rowIndex">
                     <tr>
                        <td style="width: 70px; text-align: center;">{{ i + 1 }}</td>
+                       <td ><img src="../../../../{{ item.hinhAnh }}" alt="" style="width:80px; height: 80px;"></td>
                        <td>{{ item.hoTen }}</td>
                        <td>{{ item.diaChi }}</td>
                        <td>
@@ -119,17 +125,6 @@
         <form *ngIf="doneSetupForm" [formGroup]="formdata"  (ngSubmit)="onSubmit(formdata.value)" class="form-horizontal utehy-form">
         <div class="modal-body no-padding">
           <div class="row">
-            <div class="col-12"  *ngIf="isCreate" >
-              <div class="form-group">
-                <label class="control-label no-padding-right"> Mã (
-                  <span style="color: red;">*</span>)
-                </label>
-                <input type="text" class=" form-control" placeholder="Mã" formControlName="iD_GV"/>
-                <small class="form-text text-muted" *ngIf="submitted && f.iD_GV.errors">
-                  <i style="color: red;" *ngIf="f.iD_GV.errors.required">Hãy nhập thông tin họ tên</i>
-                </small>
-              </div>
-            </div>
             <div class="col-12">
               <div class="form-group">
                 <label class="control-label no-padding-right"> Họ tên (
@@ -144,8 +139,7 @@
             <div class="col-6">
               <div class="form-group">
                 <label class="control-label no-padding-right"> Ngày sinh (<span style="color: red;">*</span>)</label><br>
-                <input type="text" class=" form-control" placeholder="Họ tên" formControlName="ngaySinh"/>
-                <!-- <p-calendar formControlName="ngaySinh" [dateFormat]="dateFormat"  [locale]="locale_vn" [showIcon]="true" inputId="icon"></p-calendar> -->
+                <p-calendar formControlName="ngaySinh" [dateFormat]="dateFormat"  [locale]="locale_vn" [showIcon]="true" inputId="icon"></p-calendar>
                 <small class="form-text text-muted" *ngIf="submitted && f.ngaySinh.errors">
                   <i style="color: red;" *ngIf="f.ngaySinh.errors.required">Hãy nhập ngày sinh</i>
                 </small>
@@ -174,7 +168,7 @@
                 <label class="control-label no-padding-right"> Số điện thoại (
                   <span style="color: red;">*</span>)
                 </label>
-                <input type="number" class=" form-control" placeholder="Số điện thoại" formControlName="sdt"/>
+                <input type="tel" class=" form-control" placeholder="Số điện thoại" formControlName="sdt"/>
                 <small class="form-text text-muted" *ngIf="submitted && f.sdt.errors">
                   <i style="color: red;" *ngIf="f.sdt.errors.required">Hãy nhập thông tin Số điện thoại</i>
                 </small>
@@ -187,7 +181,7 @@
                 </label>
                 <input type="text" class=" form-control" placeholder="Địa chỉ" formControlName="diaChi"/>
                 <small class="form-text text-muted" *ngIf="submitted && f.diaChi.errors">
-                  <i style="color: red;" *ngIf="f.diaChi.errors.required">Hãy nhập thông tin dịa chỉ</i>
+                  <i style="color: red;" *ngIf="f.diaChi.errors.required">Hãy nhập thông tin địa chỉ</i>
                 </small>
               </div>
               <div class="form-group">

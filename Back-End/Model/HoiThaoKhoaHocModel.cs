@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Model
 {
-    public class HoiThaoKhoaHoc
+    public class HoiThaoKhoaHocModel
     {
         public string ID_HoiThao { get; set; }
         public string Loai_HoiThao { get; set; }

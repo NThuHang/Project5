@@ -47,5 +47,9 @@ namespace BLL
             return taikhoan;
 
         }
+        public TaiKhoanModel GetThongTin(string id)
+        {
+            return _res.GetThongTin(id);
+        }
     }
 }

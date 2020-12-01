@@ -13,6 +13,7 @@ namespace BLL
         bool Delete(string id);
         GiangVienModel GetDatabyID(string id);
         List<GiangVienModel> Search(int pageIndex, int pageSize, out long total, string hoten);
+        GiangVienModel Get_ThongTin_TK(string id);
     }
 }
 

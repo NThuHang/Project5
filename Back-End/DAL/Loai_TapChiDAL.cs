@@ -21,7 +21,7 @@ namespace DAL
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "Loai_TapChi_getAll");
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "loai_tapchi_getAll");
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<Loai_TapChiModel>().ToList();

@@ -18,9 +18,9 @@ namespace API.Controllers
     public class Loai_TapChiController : ControllerBase
     {
         private ILoai_TapChiBLL _Loai_TapChiBLL;
-        public Loai_TapChiController(ILoai_TapChiBLL Loai_TapChiBLL)
+        public Loai_TapChiController(ILoai_TapChiBLL LoaiTapChiBLL)
         {
-            _Loai_TapChiBLL = Loai_TapChiBLL;
+            _Loai_TapChiBLL = LoaiTapChiBLL;
         }
 
         [Route("get-all")]

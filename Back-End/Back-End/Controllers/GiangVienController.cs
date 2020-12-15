@@ -12,7 +12,6 @@ using Model;
 
 namespace API.Controllers
 {
-   
     [ApiController]
     [Route("api/[controller]")]
     public class GiangVienController : ControllerBase

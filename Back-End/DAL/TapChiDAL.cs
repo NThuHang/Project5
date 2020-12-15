@@ -21,7 +21,7 @@ namespace DAL
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "TapChi_getAll");
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "tapchi_getAll");
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<TapChiModel>().ToList();
@@ -36,8 +36,8 @@ namespace DAL
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "TapChi_getID",
-                     "@ID_BBao", id);
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "tapchi_getID",
+                     "@ID", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<TapChiModel>().FirstOrDefault();
@@ -53,7 +53,7 @@ namespace DAL
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "TapChi_create",
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "tapchi_create",
                 "@ID_TapChi", model.ID_TapChi,
                 "@ID_Loai", model.ID_Loai,
                 "@Ten_TapChi", model.Ten_TapChi,
@@ -76,8 +76,8 @@ namespace DAL
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "TapChi_delete",
-                "@ID_BBao", id);
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "tapchi_delete",
+                "@ID_TapChi", id);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -94,7 +94,7 @@ namespace DAL
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "TapChi_update",
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "tapchi_update",
                 "@ID_TapChi", model.ID_TapChi,
                 "@ID_Loai", model.ID_Loai,
                 "@Ten_TapChi", model.Ten_TapChi,
@@ -118,7 +118,7 @@ namespace DAL
             total = 0;
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "TapChi_search",
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "tapchi_search",
                     "@page_index", pageIndex,
                     "@page_size", pageSize,
                      "@ten", ten);

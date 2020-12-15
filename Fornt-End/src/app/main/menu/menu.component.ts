@@ -1,19 +1,18 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators} from '@angular/forms';
-import { BaseComponent } from '../../../lib/base-component';
+import { BaseComponent } from '../../lib/base-component';
 import { FileUpload } from 'primeng/fileupload';
 import 'rxjs/add/operator/takeUntil';
 declare var $: any;
 
 @Component({
-  selector: 'app-baochi',
-  templateUrl: './baochi.component.html',
-  styleUrls: ['./baochi.component.css']
+  selector: 'app-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.css']
 })
-export class BaochiComponent extends BaseComponent implements OnInit {
-  public baochis: any ;
-  public baochi: any;
-  public tapchi: any;
+export class MenuComponent extends BaseComponent implements OnInit {
+  public danhmucs: any ;
+  public danhmuc: any;
   public totalRecords:any;
   public pageSize = 3;
   public page = 1;
@@ -24,6 +23,8 @@ export class BaochiComponent extends BaseComponent implements OnInit {
   public showUpdateModal:any;
   public isCreate:any;
   submitted = false;
+  @ViewChild(FileUpload, { static: false }) file_image: FileUpload;
+
   constructor(private fb: FormBuilder, injector: Injector) {
     super(injector);
   }
@@ -32,12 +33,11 @@ export class BaochiComponent extends BaseComponent implements OnInit {
       'ten': [''],
     });
     this.search();
-
   }
 
   loadPage(page) {
-    this._api.post('/api/baochi/search',{page: page, pageSize: this.pageSize}).takeUntil(this.unsubscribe).subscribe(res => {
-      this.baochis = res.data;
+    this._api.post('/api/danhmuc/search',{page: page, pageSize: this.pageSize}).takeUntil(this.unsubscribe).subscribe(res => {
+      this.danhmucs = res.data;
       this.totalRecords =  res.totalItems;
       this.pageSize = res.pageSize;
       });
@@ -46,18 +46,13 @@ export class BaochiComponent extends BaseComponent implements OnInit {
   search() {
     this.page = 1;
     this.pageSize = 5;
-    this._api.post('/api/baochi/search',{page: this.page, pageSize: this.pageSize, ten: this.formsearch.get('ten').value}).takeUntil(this.unsubscribe).subscribe(res => {
-      this.baochis = res.data;
+    this._api.post('/api/danhmuc/search',{page: this.page, pageSize: this.pageSize, ten: this.formsearch.get('ten').value}).takeUntil(this.unsubscribe).subscribe(res => {
+      this.danhmucs = res.data;
       this.totalRecords =  res.totalItems;
       this.pageSize = res.pageSize;
       });
   }
 
-  lay_tapchi(){
-    this._api.get('/api/tapchi/get-all').subscribe(res=>{
-      this.tapchi = res;
-    })
-  }
   get f() { return this.formdata.controls; }
 
   onSubmit(value) {
@@ -74,7 +69,7 @@ export class BaochiComponent extends BaseComponent implements OnInit {
           ID_TapChi:value.iD_TapChi ,
           TG_XB:value.tG_XB ,
           };
-        this._api.post('/api/baochi/create-baochi',tmp).takeUntil(this.unsubscribe).subscribe(res => {
+        this._api.post('/api/danhmuc/create-danhmuc',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Thêm thành công');
           this.search();
           this.closeModal();
@@ -87,9 +82,9 @@ export class BaochiComponent extends BaseComponent implements OnInit {
           Trang_KT:value.trang_KT,
           ID_TapChi:value.iD_TapChi ,
           TG_XB:value.tG_XB  ,
-          ID_baochi:this.baochi.iD_baochi
+          ID_danhmuc:this.danhmuc.iD_danhmuc
         };
-        this._api.post('/api/baochi/update-baochi',tmp).takeUntil(this.unsubscribe).subscribe(res => {
+        this._api.post('/api/danhmuc/update-danhmuc',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Cập nhật thành công');
           this.search();
           this.closeModal();
@@ -100,14 +95,14 @@ export class BaochiComponent extends BaseComponent implements OnInit {
 
 
   onDelete(row) {
-    this._api.post('/api/baochi/delete-baochi',{baochi_id:row.iD_baochi}).takeUntil(this.unsubscribe).subscribe(res => {
+    this._api.post('/api/danhmuc/delete-danhmuc',{danhmuc_id:row.iD_danhmuc}).takeUntil(this.unsubscribe).subscribe(res => {
       alert('Xóa thành công');
       this.search();
       });
   }
 
   Reset() {
-    this.baochi = null;
+    this.danhmuc = null;
     this.formdata = this.fb.group({
       'iD_BBao': ['', Validators.required],
       'ten_BBao': ['', Validators.required],
@@ -122,7 +117,7 @@ export class BaochiComponent extends BaseComponent implements OnInit {
     this.doneSetupForm = false;
     this.showUpdateModal = true;
     this.isCreate = true;
-    this.baochi = null;
+    this.danhmuc = null;
     setTimeout(() => {
       $('#createModal').modal('toggle');
       this.formdata = this.fb.group({
@@ -138,22 +133,21 @@ export class BaochiComponent extends BaseComponent implements OnInit {
   }
 
   public openUpdateModal(row) {
-    this.lay_tapchi();
     this.doneSetupForm = false;
     this.showUpdateModal = true;
     this.isCreate = false;
     setTimeout(() => {
       $('#createModal').modal('toggle');
-      this._api.get('/api/baochi/get-by-id/'+ row.iD_BBao).takeUntil(this.unsubscribe).subscribe((res:any) => {
-        this.baochi = res;
+      this._api.get('/api/danhmuc/get-by-id/'+ row.iD_BBao).takeUntil(this.unsubscribe).subscribe((res:any) => {
+        this.danhmuc = res;
 
           this.formdata = this.fb.group({
-            'iD_BBao': [this.baochi.iD_BBao, Validators.required],
-            'ten_BBao': [this.baochi.ten_BBao, Validators.required],
-            'trang_BD': [this.baochi.trang_BD, Validators.required],
-            'trang_KT': [this.baochi.trang_KT, Validators.required],
-            'iD_TapChi' : [this.baochi.iD_TapChi, Validators.required],
-            'tG_XB'  : [this.baochi.tG_XB, Validators.required]
+            'iD_BBao': [this.danhmuc.iD_BBao, Validators.required],
+            'ten_BBao': [this.danhmuc.ten_BBao, Validators.required],
+            'trang_BD': [this.danhmuc.trang_BD, Validators.required],
+            'trang_KT': [this.danhmuc.trang_KT, Validators.required],
+            'iD_TapChi' : [this.danhmuc.iD_TapChi, Validators.required],
+            'tG_XB'  : [this.danhmuc.tG_XB, Validators.required]
           });
           this.doneSetupForm = true;
         });

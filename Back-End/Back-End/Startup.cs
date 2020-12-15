@@ -75,8 +75,14 @@ namespace Back_End
             services.AddTransient<ITaiKhoanBLL, TaiKhoanBLL>();
             services.AddTransient<IQT_DaoTaoDAL, QT_DaoTaoDAL>();
             services.AddTransient<IQT_DaoTaoBLL, QT_DaoTaoBLL>();
+            services.AddTransient<IQT_CongTacDAL, QT_CongTacDAL>();
+            services.AddTransient<IQT_CongTacBLL, QT_CongTacBLL>();
             services.AddTransient<IBaoChiDAL, BaoChiDAL>();
             services.AddTransient<IBaoChiBLL, BaoChiBLL>();
+            services.AddTransient<ILoai_TapChiDAL, Loai_TapChiDAL>();
+            services.AddTransient<ILoai_TapChiBLL, Loai_TapChiBLL>();
+            services.AddTransient<ITapChiDAL, TapChiDAL>();
+            services.AddTransient<ITapChiBLL, TapChiBLL>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

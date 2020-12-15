@@ -1,6 +1,6 @@
 <div class="page-inner">
   <div class="page-header">
-     <h4 class="page-title">Quản Lý Loại Báo Chí</h4>
+     <h4 class="page-title">Quản Lý Danh Mục</h4>
      <ul class="breadcrumbs">
         <li class="nav-home">
            <a href="#">
@@ -11,13 +11,13 @@
            <i class="flaticon-right-arrow"></i>
         </li>
         <li class="nav-item">
-           <a href="#">Loại Báo Chí</a>
+           <a href="#">Danh Mục</a>
         </li>
         <li class="separator">
            <i class="flaticon-right-arrow"></i>
         </li>
         <li class="nav-item">
-           <a href="#">Danh Sách Loại Báo Chí</a>
+           <a href="#">Danh Sách Danh Mục</a>
         </li>
      </ul>
   </div>
@@ -26,7 +26,7 @@
         <div class="card">
            <div class="card-header">
               <div class="card-title">
-                 Danh Sách Loại Tạp Chí
+                 Danh Sách Danh Mục
                  <div class="them">
                     <button class="btn btn-success" (click)="createModal()">
                     <span class="btn-label">
@@ -42,11 +42,11 @@
                  <div class="col-lg-2">
                   <div class="form-group form-group-default">
                     <label>Số Dòng</label>
-                    <select class="form-control" formControlName="hang" id="formGroupDefaultSelect">
-                      <option value="3">5</option>
-                      <option value="5">10</option>
-                      <option value="15">15</option>
-                      <option value="20">20</option>
+                    <select class="form-control" id="formGroupDefaultSelect">
+                      <option>5</option>
+                      <option>10</option>
+                      <option>15</option>
+                      <option>20</option>
                     </select>
                   </div>
                  </div>
@@ -62,18 +62,20 @@
                  </div>
                </div>
               </form>
-              <p-table selectionMode="single" [value]="loaiTCs" styleClass="p-datatable-gridlines">
+              <p-table selectionMode="single" [value]="danhmucs" styleClass="p-datatable-gridlines">
                  <ng-template pTemplate="header">
                     <tr>
                        <th style="width: 70px; text-align: center;">STT</th>
-                       <th style="width: 20%; text-align: left;">Tên Loại Tạp Chí</th>
+                       <th style="width: 20%; text-align: left;">Tên Danh Mục</th>
+                       <th style="width: 20%; text-align: left;">Thứ Tự</th>
                        <th style="width: 120px; text-align: left;">Tác vụ</th>
                     </tr>
                  </ng-template>
                  <ng-template pTemplate="body" let-item  let-i="rowIndex">
                     <tr>
                        <td style="width: 70px; text-align: center;">{{ i + 1 }}</td>
-                       <td>{{ item.ten_Loai }}</td>
+                       <td>{{ item.ten_BBao }}</td>
+                       <td>{{ item.iD_TapChi }}</td>
                        <td>
                           <button (click)="openUpdateModal(item)" data-toggle="tooltip" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
                             <i class="fa fa-edit"></i>
@@ -108,8 +110,8 @@
   <div class="modal-dialog modal-lg full-height-modal ">
      <div class="modal-content">
         <div class="modal-header">
-          <h4  *ngIf="isCreate" class="modal-title">THÊM LOẠI TẠP CHÍ</h4>
-          <h4 *ngIf="!isCreate" class="modal-title">SỬA LOẠI TẠP CHÍ</h4>
+          <h4  *ngIf="isCreate" class="modal-title">THÊM BÁO CHÍ</h4>
+          <h4 *ngIf="!isCreate" class="modal-title">SỬA BÁO CHÍ</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -119,12 +121,62 @@
           <div class="row">
             <div class="col-12">
               <div class="form-group">
-                <label class="control-label no-padding-right"> Tên tạp chí (
+                <label class="control-label no-padding-right"> Họ tên (
                   <span style="color: red;">*</span>)
                 </label>
-                <input type="text" class=" form-control" placeholder="Họ tên" formControlName="ten_TapChi"/>
-                <small class="form-text text-muted" *ngIf="submitted && f.ten_TapChi.errors">
-                  <i style="color: red;" *ngIf="f.ten_TapChi.errors.required">Hãy nhập tên tạp chí</i>
+                <input type="text" class=" form-control" placeholder="Họ tên" formControlName="ten_BBao"/>
+                <small class="form-text text-muted" *ngIf="submitted && f.ten_BBao.errors">
+                  <i style="color: red;" *ngIf="f.ten_BBao.errors.required">Hãy nhập thông tin họ tên</i>
+                </small>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label class="control-label no-padding-right"> Loại tạp chí (
+                  <span style="color: red;">*</span>)
+                </label>
+                <select formControlName="iD_Loai" class="form-control form-control" id="defaultSelect">
+                  <option value="">Chọn loại tạp chí</option>
+                  <option *ngFor="let item of danhmuc" [value]="danhmuc.iD_Loai">1</option>
+                </select>
+                <small class="form-text text-muted" *ngIf="submitted && f.ten_BBao.errors">
+                  <i style="color: red;" *ngIf="f.ten_BBao.errors.required">Hãy chọn thông tin loại tạp chí</i>
+                </small>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label class="control-label no-padding-right"> Tạp chí (
+                  <span style="color: red;">*</span>)
+                </label>
+                <select formControlName="iD_TapChi"  class="form-control form-control" id="defaultSelect">
+                  <option value="">Chọn tạp chí</option>
+                  <option *ngFor="let item of danhmuc" [value]="danhmuc.iD_TapChi">2</option>
+                </select>
+                <small class="form-text text-muted" *ngIf="submitted && f.ten_BBao.errors">
+                  <i style="color: red;" *ngIf="f.ten_BBao.errors.required">Hãy chọn tạp chí</i>
+                </small>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label class="control-label no-padding-right"> Trang bắt đầu (
+                  <span style="color: red;">*</span>)
+                </label>
+                <input type="number" class=" form-control" placeholder="Trang bắt đầu" formControlName="trang_BD"/>
+                <small class="form-text text-muted" *ngIf="submitted && f.trang_BD.errors">
+                  <i style="color: red;" *ngIf="f.trang_BD.errors.required">Hãy nhập thông tin trang bắt đầu</i>
+                </small>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label class="control-label no-padding-right"> Trang kết thúc (
+                  <span style="color: red;">*</span>)
+                </label>
+                <input type="number" class=" form-control" placeholder="Trang kết thúc" formControlName="trang_BD"/>
+                <small class="form-text text-muted" *ngIf="submitted && f.trang_BD.errors">
+                  <i style="color: red;" *ngIf="f.trang_BD.errors.required">Hãy nhập thông tin trang kết thúc</i>
                 </small>
               </div>
             </div>

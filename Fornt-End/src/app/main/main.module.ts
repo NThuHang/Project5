@@ -11,6 +11,7 @@ import { RoleGuard } from '../lib/auth.guard';
 import { Role } from '../models/role';
 import { UnauthorizedComponent } from '../shared/unauthorized/unauthorized.component';
 import { FileNotFoundComponent } from '../shared/file-not-found/file-not-found.component';
+import { MenuComponent } from './menu/menu.component';
 
 export const mainRoutes: Routes = [
   {
@@ -43,6 +44,14 @@ export const mainRoutes: Routes = [
           canActivate: [RoleGuard],
           data: { Quyen: [Role.Admin] },
       },
+      {
+        path: 'qltaikhoan',
+        loadChildren: () =>
+          import('./ql-taikhoan/ql-taikhoan.module').then((m) => m.QltaikhoanModule),
+          canActivate: [RoleGuard],
+          data: { Quyen: [Role.Admin] },
+      },
+
     ],
   },
 ];
@@ -52,7 +61,8 @@ export const mainRoutes: Routes = [
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
-    MainComponent
+    MainComponent,
+    MenuComponent
   ],
   imports: [
     SharedModule,

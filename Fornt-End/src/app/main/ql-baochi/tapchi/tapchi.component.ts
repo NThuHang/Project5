@@ -13,6 +13,7 @@ declare var $: any;
 export class TapchiComponent extends BaseComponent implements OnInit {
   public tapchis: any ;
   public tapchi: any;
+  public loaitc: any;
   public totalRecords:any;
   public pageSize = 3;
   public page = 1;
@@ -52,7 +53,11 @@ export class TapchiComponent extends BaseComponent implements OnInit {
       this.pageSize = res.pageSize;
       });
   }
-
+  lay_loai_tapchi(){
+    this._api.get('/api/loai_tapchi/get-all').subscribe(res=>{
+      this.loaitc = res;
+    })
+  }
   get f() { return this.formdata.controls; }
 
   onSubmit(value) {
@@ -62,12 +67,11 @@ export class TapchiComponent extends BaseComponent implements OnInit {
     }
     if(this.isCreate) {
         let tmp = {
-          ID_BBao:value.iD_BBao,
-          Ten_BBao:value.ten_BBao,
-          Trang_BD:value.trang_BD,
-          Trang_KT:value.trang_KT,
-          ID_TapChi:value.iD_TapChi ,
-          TG_XB:value.tG_XB ,
+          ID_TapChi:value.iD_TapChi,
+          ID_Loai:value.iD_Loai,
+          Ten_TapChi:value.ten_TapChi,
+          DonVi:value.donVi ,
+          QuocGia:value.quocGia ,
           };
         this._api.post('/api/tapchi/create-tapchi',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Thêm thành công');
@@ -76,12 +80,11 @@ export class TapchiComponent extends BaseComponent implements OnInit {
           });
     } else {
         let tmp = {
-          ID_BBao:value.iD_BBao,
-          Ten_BBao:value.ten_BBao,
-          Trang_BD:value.trang_BD,
-          Trang_KT:value.trang_KT,
-          ID_TapChi:value.iD_TapChi ,
-          TG_XB:value.tG_XB  ,
+          ID_TapChi:value.iD_TapChi,
+          ID_Loai:value.iD_Loai,
+          Ten_TapChi:value.ten_TapChi,
+          DonVi:value.donVi ,
+          QuocGia:value.quocGia ,
           ID_tapchi:this.tapchi.iD_tapchi
         };
         this._api.post('/api/tapchi/update-tapchi',tmp).takeUntil(this.unsubscribe).subscribe(res => {
@@ -104,12 +107,11 @@ export class TapchiComponent extends BaseComponent implements OnInit {
   Reset() {
     this.tapchi = null;
     this.formdata = this.fb.group({
-      'iD_BBao': ['', Validators.required],
-      'ten_BBao': ['', Validators.required],
-      'trang_BD': ['', Validators.required],
-      'trang_KT': ['', Validators.required],
-      'iD_TapChi' : ['', Validators.required],
-      'tG_XB'  : ['', Validators.required]
+      'iD_TapChi': ['', Validators.required],
+      'iD_Loai': ['', Validators.required],
+      'ten_TapChi': ['', Validators.required],
+      'donVi': ['', Validators.required],
+      'quocGia'  : ['', Validators.required]
     } );
   }
 
@@ -121,33 +123,31 @@ export class TapchiComponent extends BaseComponent implements OnInit {
     setTimeout(() => {
       $('#createModal').modal('toggle');
       this.formdata = this.fb.group({
-        'iD_BBao': ['', Validators.required],
-        'ten_BBao': ['', Validators.required],
-        'trang_BD': ['', Validators.required],
-        'trang_KT': ['', Validators.required],
-        'iD_TapChi' : ['', Validators.required],
-        'tG_XB'  : ['', Validators.required]
+        'iD_TapChi': ['', Validators.required],
+        'iD_Loai': ['', Validators.required],
+        'ten_TapChi': ['', Validators.required],
+        'donVi': ['', Validators.required],
+        'quocGia'  : ['', Validators.required]
       });
       this.doneSetupForm = true;
     });
   }
 
   public openUpdateModal(row) {
+    this.lay_loai_tapchi();
     this.doneSetupForm = false;
     this.showUpdateModal = true;
     this.isCreate = false;
     setTimeout(() => {
       $('#createModal').modal('toggle');
-      this._api.get('/api/tapchi/get-by-id/'+ row.iD_BBao).takeUntil(this.unsubscribe).subscribe((res:any) => {
+      this._api.get('/api/tapchi/get-by-id/'+ row.iD_TapChi).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.tapchi = res;
-
           this.formdata = this.fb.group({
-            'iD_BBao': [this.tapchi.iD_BBao, Validators.required],
-            'ten_BBao': [this.tapchi.ten_BBao, Validators.required],
-            'trang_BD': [this.tapchi.trang_BD, Validators.required],
-            'trang_KT': [this.tapchi.trang_KT, Validators.required],
-            'iD_TapChi' : [this.tapchi.iD_TapChi, Validators.required],
-            'tG_XB'  : [this.tapchi.tG_XB, Validators.required]
+            'iD_TapChi': [this.tapchi.iD_TapChi, Validators.required],
+            'iD_Loai': [this.tapchi.iD_Loai, Validators.required],
+            'ten_TapChi': [this.tapchi.ten_TapChi, Validators.required],
+            'donVi': [this.tapchi.donVi, Validators.required],
+            'quocGia' : [this.tapchi.quocGia, Validators.required]
           });
           this.doneSetupForm = true;
         });

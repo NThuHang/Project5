@@ -21,7 +21,7 @@ namespace DAL
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "QT_CongTac_getAll");
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "congtac_getAll");
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<QT_CongTacModel>().ToList();

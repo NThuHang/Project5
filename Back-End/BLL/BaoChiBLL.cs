@@ -18,6 +18,10 @@ namespace BLL
         {
             return _res.GetData();
         }
+        public List<BaoChiModel> GetDataBao(string id)
+        {
+            return _res.GetDataBao(id);
+        }
         public bool Create(BaoChiModel model)
         {
             return _res.Create(model);

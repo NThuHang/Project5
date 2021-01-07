@@ -13,5 +13,7 @@ namespace Model
         public string TG_KT { get; set; }
         public string TinhTrang { get; set; }
         public string KetQua { get; set; }
+        public string ID_GV { get; set; }
+        public string HoTen { get; set; }
     }
 }

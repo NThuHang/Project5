@@ -13,6 +13,7 @@ namespace BLL
         bool Delete(string id);
         QT_CongTacModel GetDatabyID(string id);
         List<QT_CongTacModel> Search(int pageIndex, int pageSize, out long total, string ten);
+        List<QT_CongTacModel> GetGV(string id);
     }
 }
 

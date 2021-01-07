@@ -14,8 +14,9 @@ export class BaochiComponent extends BaseComponent implements OnInit {
   public baochis: any ;
   public baochi: any;
   public tapchi: any;
+  public giangvien: any;
   public totalRecords:any;
-  public pageSize = 3;
+  public pageSize:any;
   public page = 1;
   public uploadedFiles: any[] = [];
   public formsearch: any;
@@ -24,6 +25,7 @@ export class BaochiComponent extends BaseComponent implements OnInit {
   public showUpdateModal:any;
   public isCreate:any;
   submitted = false;
+  pages:any;
   constructor(private fb: FormBuilder, injector: Injector) {
     super(injector);
   }
@@ -35,7 +37,18 @@ export class BaochiComponent extends BaseComponent implements OnInit {
 
   }
 
+  updateValue(value: any){
+    this.pages = value;
+    this.search();
+  }
+
   loadPage(page) {
+    if(this.pages != null){
+      this.pageSize = this.pages;
+    }
+    else{
+      this.pageSize = 5;
+    }
     this._api.post('/api/baochi/search',{page: page, pageSize: this.pageSize}).takeUntil(this.unsubscribe).subscribe(res => {
       this.baochis = res.data;
       this.totalRecords =  res.totalItems;
@@ -45,7 +58,12 @@ export class BaochiComponent extends BaseComponent implements OnInit {
 
   search() {
     this.page = 1;
-    this.pageSize = 5;
+    if(this.pages != null){
+      this.pageSize = this.pages;
+    }
+    else{
+      this.pageSize = 5;
+    }
     this._api.post('/api/baochi/search',{page: this.page, pageSize: this.pageSize, ten: this.formsearch.get('ten').value}).takeUntil(this.unsubscribe).subscribe(res => {
       this.baochis = res.data;
       this.totalRecords =  res.totalItems;
@@ -58,6 +76,11 @@ export class BaochiComponent extends BaseComponent implements OnInit {
       this.tapchi = res;
     })
   }
+  lay_gv(){
+    this._api.get('/api/giangvien/get-all').subscribe(res=>{
+      this.giangvien = res;
+    })
+  }
   get f() { return this.formdata.controls; }
 
   onSubmit(value) {
@@ -67,12 +90,12 @@ export class BaochiComponent extends BaseComponent implements OnInit {
     }
     if(this.isCreate) {
         let tmp = {
-          ID_BBao:value.iD_BBao,
           Ten_BBao:value.ten_BBao,
           Trang_BD:value.trang_BD,
           Trang_KT:value.trang_KT,
-          ID_TapChi:value.iD_TapChi ,
-          TG_XB:value.tG_XB ,
+          ID_TapChi:value.iD_TapChi,
+          ID_GV:value.iD_GV,
+          TG_XB:value.tG_XB
           };
         this._api.post('/api/baochi/create-baochi',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Thêm thành công');
@@ -81,13 +104,13 @@ export class BaochiComponent extends BaseComponent implements OnInit {
           });
     } else {
         let tmp = {
-          ID_BBao:value.iD_BBao,
           Ten_BBao:value.ten_BBao,
           Trang_BD:value.trang_BD,
           Trang_KT:value.trang_KT,
           ID_TapChi:value.iD_TapChi ,
+          ID_GV:value.iD_GV,
           TG_XB:value.tG_XB  ,
-          ID_baochi:this.baochi.iD_baochi
+          ID_BBao:this.baochi.iD_BBao
         };
         this._api.post('/api/baochi/update-baochi',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Cập nhật thành công');
@@ -100,7 +123,7 @@ export class BaochiComponent extends BaseComponent implements OnInit {
 
 
   onDelete(row) {
-    this._api.post('/api/baochi/delete-baochi',{baochi_id:row.iD_baochi}).takeUntil(this.unsubscribe).subscribe(res => {
+    this._api.post('/api/baochi/delete-baochi',{bc_id:row.iD_BBao}).takeUntil(this.unsubscribe).subscribe(res => {
       alert('Xóa thành công');
       this.search();
       });
@@ -114,11 +137,14 @@ export class BaochiComponent extends BaseComponent implements OnInit {
       'trang_BD': ['', Validators.required],
       'trang_KT': ['', Validators.required],
       'iD_TapChi' : ['', Validators.required],
-      'tG_XB'  : ['', Validators.required]
+      'iD_GV' : ['', Validators.required],
+      'tG_XB'  : [this.today, Validators.required]
     } );
   }
 
   createModal() {
+    this.lay_tapchi();
+    this.lay_gv();
     this.doneSetupForm = false;
     this.showUpdateModal = true;
     this.isCreate = true;
@@ -126,19 +152,21 @@ export class BaochiComponent extends BaseComponent implements OnInit {
     setTimeout(() => {
       $('#createModal').modal('toggle');
       this.formdata = this.fb.group({
-        'iD_BBao': ['', Validators.required],
         'ten_BBao': ['', Validators.required],
         'trang_BD': ['', Validators.required],
         'trang_KT': ['', Validators.required],
         'iD_TapChi' : ['', Validators.required],
+        'iD_GV' : ['', Validators.required],
         'tG_XB'  : ['', Validators.required]
       });
+      this.formdata.get('tG_XB').setValue(this.today);
       this.doneSetupForm = true;
     });
   }
 
   public openUpdateModal(row) {
     this.lay_tapchi();
+    this.lay_gv();
     this.doneSetupForm = false;
     this.showUpdateModal = true;
     this.isCreate = false;
@@ -146,14 +174,15 @@ export class BaochiComponent extends BaseComponent implements OnInit {
       $('#createModal').modal('toggle');
       this._api.get('/api/baochi/get-by-id/'+ row.iD_BBao).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.baochi = res;
-
+        console.log(res);
+        let tg = new Date(this.baochi.tG_XB);
           this.formdata = this.fb.group({
-            'iD_BBao': [this.baochi.iD_BBao, Validators.required],
             'ten_BBao': [this.baochi.ten_BBao, Validators.required],
             'trang_BD': [this.baochi.trang_BD, Validators.required],
             'trang_KT': [this.baochi.trang_KT, Validators.required],
             'iD_TapChi' : [this.baochi.iD_TapChi, Validators.required],
-            'tG_XB'  : [this.baochi.tG_XB, Validators.required]
+            'iD_GV' : [this.baochi.iD_GV, Validators.required],
+            'tG_XB'  : [tg, Validators.required]
           });
           this.doneSetupForm = true;
         });

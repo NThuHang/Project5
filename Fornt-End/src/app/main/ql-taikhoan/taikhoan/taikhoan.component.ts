@@ -31,7 +31,7 @@ export class TaikhoanComponent extends BaseComponent implements OnInit {
     this.formsearch = this.fb.group({
       'hoten': [''],
     });
-    this.search();
+
   }
 
   loadPage(page) {

@@ -19,11 +19,11 @@ namespace Back_End.Controllers
             _DanhMucBLL = DanhMucBLL;
         }
 
-        [Route("get-all")]
+        [Route("get-all/{quyen}")]
         [HttpGet]
-        public IEnumerable<DanhMucModel> GetDatabAll()
+        public IEnumerable<DanhMucModel> GetDatabAll(string quyen)
         {
-            return _DanhMucBLL.GetData();
+            return _DanhMucBLL.GetData(quyen);
         }
     }
 }

@@ -14,28 +14,27 @@ namespace BLL
         {
             _res = DanhMucRes;
         }
-        public List<DanhMucModel> GetData()
+        public List<DanhMucModel> GetData(string quyen)
         {
-            var allItemGroups = _res.GetData();
-            var lstParent = allItemGroups.Where(ds => ds.ID_DM_Cha == null).OrderBy(s => s.Seq_Num).ToList();
-            foreach (var item in lstParent)
+            var lay_menu = _res.GetData(quyen);
+            var ds_cha = lay_menu.Where(ds => ds.ID_DM_Cha == null).OrderBy(s => s.Seq_Num).ToList();
+            foreach (var item in ds_cha)
             {
-                item.DM_Con = GetDanhMucCon(allItemGroups, item);
+                item.DM_Con = GetDanhMucCon(lay_menu, item);
             }
-            return lstParent;
+            return ds_cha;
         }
         public List<DanhMucModel> GetDanhMucCon (List<DanhMucModel> lstAll, DanhMucModel node)
         {
-            var lstChilds = lstAll.Where(ds => ds.ID_DM_Cha == node.ID_DM).ToList();
-            if (lstChilds.Count == 0)
+            var ds_con = lstAll.Where(ds => ds.ID_DM_Cha == node.ID_DM).ToList();
+            if (ds_con.Count == 0)
                 return null;
-            for (int i = 0; i < lstChilds.Count; i++)
+            for (int i = 0; i < ds_con.Count; i++)
             {
-                var childs = GetDanhMucCon(lstAll, lstChilds[i]);
-                lstChilds[i].type = (childs == null || childs.Count == 0) ? "leaf" : "";
-                lstChilds[i].DM_Con = childs;
+                var con = GetDanhMucCon(lstAll, ds_con[i]);
+                ds_con[i].DM_Con = con;
             }
-            return lstChilds.OrderBy(s => s.Seq_Num).ToList();
+            return ds_con.OrderBy(s => s.Seq_Num).ToList();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace DAL
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "HoiThaoKhoaHoc_getAll");
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "hoithao_getAll");
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<HoiThaoKhoaHocModel>().ToList();
@@ -126,7 +126,7 @@ namespace DAL
             total = 0;
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "HoiThaoKhoaHoc_search",
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "hoithao_search",
                     "@page_index", pageIndex,
                     "@page_size", pageSize,
                      "@ten", ten);

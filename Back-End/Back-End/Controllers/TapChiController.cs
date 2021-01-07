@@ -36,6 +36,12 @@ namespace API.Controllers
         {
             return _TapChiBLL.GetDatabyID(id);
         }
+        [Route("get-by-loai/{id}")]
+        [HttpGet]
+        public IEnumerable<TapChiModel> GetbyIDLoai(string id)
+        {
+            return _TapChiBLL.GetbyIDLoai(id);
+        }
 
         [Route("create-tapchi")]
         [HttpPost]
@@ -49,9 +55,9 @@ namespace API.Controllers
         [HttpPost]
         public IActionResult DeleteUser([FromBody] Dictionary<string, object> formData)
         {
-            string bc_id = "";
-            if (formData.Keys.Contains("bc_id") && !string.IsNullOrEmpty(Convert.ToString(formData["bc_id"]))) { bc_id = Convert.ToString(formData["bc_id"]); }
-            _TapChiBLL.Delete(bc_id);
+            string tc_id = "";
+            if (formData.Keys.Contains("tc_id") && !string.IsNullOrEmpty(Convert.ToString(formData["tc_id"]))) { tc_id = Convert.ToString(formData["tc_id"]); }
+            _TapChiBLL.Delete(tc_id);
             return Ok();
         }
 

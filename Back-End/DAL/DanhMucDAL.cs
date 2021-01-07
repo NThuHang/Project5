@@ -15,12 +15,12 @@ namespace DAL
             _dbHelper = dbHelper;
         }
 
-        public List<DanhMucModel> GetData()
+        public List<DanhMucModel> GetData(string quyen)
         {
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "lay_menu");
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "lay_menu", "@quyen", quyen);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<DanhMucModel>().ToList();

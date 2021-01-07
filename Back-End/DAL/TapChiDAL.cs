@@ -31,6 +31,21 @@ namespace DAL
                 throw ex;
             }
         }
+        public List<TapChiModel> GetbyIDLoai(string id)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "tapchi_getIDloai", "@ID_LoaiTC", id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<TapChiModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public TapChiModel GetDatabyID(string id)
         {
             string msgError = "";

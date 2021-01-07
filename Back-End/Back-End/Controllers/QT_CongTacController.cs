@@ -50,9 +50,9 @@ namespace API.Controllers
         [HttpPost]
         public IActionResult DeleteUser([FromBody] Dictionary<string, object> formData)
         {
-            string bc_id = "";
-            if (formData.Keys.Contains("bc_id") && !string.IsNullOrEmpty(Convert.ToString(formData["bc_id"]))) { bc_id = Convert.ToString(formData["bc_id"]); }
-            _QT_CongTacBLL.Delete(bc_id);
+            string ct_id = "";
+            if (formData.Keys.Contains("ct_id") && !string.IsNullOrEmpty(Convert.ToString(formData["ct_id"]))) { ct_id = Convert.ToString(formData["ct_id"]); }
+            _QT_CongTacBLL.Delete(ct_id);
             return Ok();
         }
 
@@ -90,6 +90,13 @@ namespace API.Controllers
                 throw new Exception(ex.Message);
             }
             return response;
+        }
+
+        [Route("get-gv/{id}")]
+        [HttpGet]
+        public List<QT_CongTacModel> GetGV(string id)
+        {
+            return _QT_CongTacBLL.GetGV(id);
         }
     }
 }

@@ -36,8 +36,8 @@ namespace DAL
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "Loai_TapChi_getID",
-                     "@ID_BBao", id);
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "loai_tapchi_getID",
+                     "@ID_LoaiTC", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<Loai_TapChiModel>().FirstOrDefault();
@@ -113,7 +113,7 @@ namespace DAL
             total = 0;
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "Loai_TapChi_search",
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "loaitapchi_search",
                     "@page_index", pageIndex,
                     "@page_size", pageSize,
                      "@ten", ten);

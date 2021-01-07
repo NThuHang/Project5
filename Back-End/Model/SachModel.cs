@@ -12,5 +12,7 @@ namespace Model
         public string Noi_XB { get; set; }
         public string Nam_XB { get; set; }
         public string ISBN { get; set; }
+        public string ID_GV { get; set; }
+        public string HoTen { get; set; }
     }
 }

@@ -42,11 +42,11 @@
                  <div class="col-lg-2">
                   <div class="form-group form-group-default">
                     <label>Số Dòng</label>
-                    <select class="form-control" id="formGroupDefaultSelect">
-                      <option>5</option>
-                      <option>10</option>
-                      <option>15</option>
-                      <option>20</option>
+                    <select class="form-control" #myselect (change)="updateValue(myselect.value)">
+                      <option value="5" >5</option>
+                      <option value="10">10</option>
+                      <option value="15">15</option>
+                      <option value="20">20</option>
                     </select>
                   </div>
                  </div>
@@ -65,22 +65,28 @@
               <p-table selectionMode="single" [value]="baochis" styleClass="p-datatable-gridlines">
                  <ng-template pTemplate="header">
                     <tr>
-                       <th style="width: 70px; text-align: center;">STT</th>
-                       <th style="width: 20%; text-align: left;">Tên Bài Báo</th>
-                       <th style="width: 20%; text-align: left;">Tạp Chí</th>
-                       <th style="width: 120px; text-align: left;">Tác vụ</th>
+                       <th style="width: 60px; text-align: center;">STT</th>
+                       <th style="width: 30%; text-align: center;">Tên Bài Báo</th>
+                       <th style="width: 60px; text-align: center;">TrangBĐ</th>
+                       <th style="width: 60px; text-align: center;">TrangKT</th>
+                       <th style="width: 10%; text-align: center;">Tạp Chí</th>
+                       <th style="width: 10%; text-align: center;">Thực Hiện</th>
+                       <th style="width: 100px; text-align: center;">Tác vụ</th>
                     </tr>
                  </ng-template>
                  <ng-template pTemplate="body" let-item  let-i="rowIndex">
                     <tr>
                        <td style="width: 70px; text-align: center;">{{ i + 1 }}</td>
                        <td>{{ item.ten_BBao }}</td>
-                       <td>{{ item.iD_TapChi }}</td>
+                       <td>{{ item.trang_BD }}</td>
+                       <td>{{ item.trang_KT }}</td>
+                       <td>{{ item.ten_TapChi }}</td>
+                       <td>{{ item.hoTen }}</td>
                        <td>
-                          <button (click)="openUpdateModal(item)" data-toggle="tooltip" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
+                          <button (click)="openUpdateModal(item)" data-toggle="tooltip" class="btn btn-icon btn-link btn-warning" data-original-title="Chỉnh sửa">
                             <i class="fa fa-edit"></i>
                           </button>
-                          <button id="alert_demo_7" (click)="onDelete(item)" data-toggle="tooltip" class="btn btn-link btn-danger" data-original-title="Xóa">
+                          <button (click)="onDelete(item)" data-toggle="tooltip" class="btn btn-icon btn-link btn-danger" data-original-title="Xóa">
                             <i class="fa fa-times"></i>
                           </button>
                       </td>
@@ -119,14 +125,14 @@
         <form *ngIf="doneSetupForm" [formGroup]="formdata"  (ngSubmit)="onSubmit(formdata.value)" class="form-horizontal utehy-form">
         <div class="modal-body no-padding">
           <div class="row">
-            <div class="col-6">
+            <div class="col-12">
               <div class="form-group">
                 <label class="control-label no-padding-right"> Tên Bài Báo (
                   <span style="color: red;">*</span>)
                 </label>
-                <input type="text" class=" form-control" placeholder="Họ tên" formControlName="ten_BBao"/>
+                <input type="text" class=" form-control" placeholder="Tên Bài Báo" formControlName="ten_BBao"/>
                 <small class="form-text text-muted" *ngIf="submitted && f.ten_BBao.errors">
-                  <i style="color: red;" *ngIf="f.ten_BBao.errors.required">Hãy nhập thông tin họ tên</i>
+                  <i style="color: red;" *ngIf="f.ten_BBao.errors.required">Hãy nhập tên bài báo</i>
                 </small>
               </div>
             </div>
@@ -139,8 +145,17 @@
                   <option value="">---Chọn tạp chí---</option>
                   <option *ngFor="let x of tapchi" [value]="x.iD_TapChi">{{x.ten_TapChi}}</option>
                 </select>
-                <small class="form-text text-muted" *ngIf="submitted && f.ten_BBao.errors">
+                <small class="form-text text-muted" *ngIf="submitted && f.iD_TapChi.errors">
                   <i style="color: red;" *ngIf="f.iD_TapChi.errors.required">Hãy chọn tạp chí</i>
+                </small>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label class="control-label no-padding-right"> Thời Gian Xuất Bản (<span style="color: red;">*</span>)</label><br>
+                <p-calendar formControlName="tG_XB" [dateFormat]="dateFormat"  [locale]="locale_vn" [showIcon]="true" inputId="icon"></p-calendar>
+                <small class="form-text text-muted" *ngIf="submitted && f.tG_XB.errors">
+                  <i style="color: red;" *ngIf="f.tG_XB.errors.required">Hãy nhập thời gian</i>
                 </small>
               </div>
             </div>
@@ -160,9 +175,23 @@
                 <label class="control-label no-padding-right"> Trang kết thúc (
                   <span style="color: red;">*</span>)
                 </label>
-                <input type="number" class=" form-control" placeholder="Trang kết thúc" formControlName="trang_BD"/>
-                <small class="form-text text-muted" *ngIf="submitted && f.trang_BD.errors">
-                  <i style="color: red;" *ngIf="f.trang_BD.errors.required">Hãy nhập thông tin trang kết thúc</i>
+                <input type="number" class=" form-control" placeholder="Trang kết thúc" formControlName="trang_KT"/>
+                <small class="form-text text-muted" *ngIf="submitted && f.trang_KT.errors">
+                  <i style="color: red;" *ngIf="f.trang_KT.errors.required">Hãy nhập thông tin trang kết thúc</i>
+                </small>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label class="control-label no-padding-right"> Giảng Viên Thực Hiện (
+                  <span style="color: red;">*</span>)
+                </label>
+                <select formControlName="iD_GV"  class="form-control form-control" id="defaultSelect">
+                  <option value="">---Chọn giảng viên thực hiện---</option>
+                  <option *ngFor="let x of giangvien" [value]="x.iD_GV">{{x.hoTen}}</option>
+                </select>
+                <small class="form-text text-muted" *ngIf="submitted && f.iD_GV.errors">
+                  <i style="color: red;" *ngIf="f.iD_GV.errors.required">Hãy chọn giảng viên thực hiện</i>
                 </small>
               </div>
             </div>

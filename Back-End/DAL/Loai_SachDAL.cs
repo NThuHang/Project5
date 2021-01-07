@@ -21,7 +21,7 @@ namespace DAL
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "Loai_Sach_getAll");
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "loai_sach_getAll");
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<Loai_SachModel>().ToList();
@@ -112,7 +112,7 @@ namespace DAL
             total = 0;
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "Loai_Sach_search",
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "loaisach_search",
                     "@page_index", pageIndex,
                     "@page_size", pageSize,
                      "@ten", ten);

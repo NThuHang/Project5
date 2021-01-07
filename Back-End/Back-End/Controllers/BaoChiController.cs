@@ -36,6 +36,12 @@ namespace API.Controllers
         {
             return _BaoChiBLL.GetDatabyID(id);
         }
+        [Route("get-by-bbao/{id}")]
+        [HttpGet]
+        public IEnumerable<BaoChiModel> GetDataBao(string id)
+        {
+            return _BaoChiBLL.GetDataBao(id);
+        }
 
         [Route("create-baochi")]
         [HttpPost]

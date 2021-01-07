@@ -120,7 +120,7 @@ namespace DAL
             total = 0;
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "Sach_search",
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sach_search",
                     "@page_index", pageIndex,
                     "@page_size", pageSize,
                      "@ten", ten);

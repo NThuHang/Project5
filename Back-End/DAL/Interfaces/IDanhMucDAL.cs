@@ -7,6 +7,6 @@ namespace DAL
 {
     public partial interface IDanhMucDAL
     {
-        List<DanhMucModel> GetData();
+        List<DanhMucModel> GetData(string quyen);
     }
 }

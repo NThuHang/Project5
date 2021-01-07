@@ -3,13 +3,13 @@
     <div class="sidebar-content">
       <div class="user">
         <div class="avatar-sm float-left mr-2">
-          <img src="../../../assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+          <img [src]="profile.hinhAnh" alt="" class="avatar-img rounded-circle" >
         </div>
         <div class="info">
           <a data-toggle="collapse" routerLink="#collapseExample" aria-expanded="true">
             <span>
-              Tên tk
-              <span class="user-level">Chức vụ</span>
+              {{profile.hoTen}}
+              <span class="user-level">{{taikhoans.quyen}}</span>
               <span class="caret"></span>
             </span>
           </a>

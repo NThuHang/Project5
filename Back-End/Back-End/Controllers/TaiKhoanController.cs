@@ -13,7 +13,7 @@ using Model;
 
 namespace Back_End.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class TaiKhoanController : ControllerBase
@@ -34,8 +34,15 @@ namespace Back_End.Controllers
                 return BadRequest(new { message = "Tên đăng nhập hoặc tài khoản của bạn không chính xác" });
 
             return Ok(taikhoan);
+        } 
+
+        [Route("getthongtin/{id}")]
+        [HttpGet]
+        public TaiKhoanModel GetThongTin(string id)
+        {
+            return _taiKhoanBLL.GetThongTin(id);
         }
-        
+
 
     }
 }

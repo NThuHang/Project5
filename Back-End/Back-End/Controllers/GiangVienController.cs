@@ -108,6 +108,9 @@ namespace API.Controllers
                     SaveFileFromBase64String(savePath, arrData[2]);
                 }
             }
+            else {
+                model.HinhAnh = model.HinhAnh;
+            }
             _giangVienBLL.Update(model);
             return model;
         }

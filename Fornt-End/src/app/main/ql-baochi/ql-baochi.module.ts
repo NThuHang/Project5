@@ -19,7 +19,7 @@ import { LoaiTapchiComponent } from './loai-tapchi/loai-tapchi.component';
         component: TapchiComponent,
       },
       {
-        path: 'loaitapchi',
+        path: 'loaitc',
         component: LoaiTapchiComponent,
       },
       {

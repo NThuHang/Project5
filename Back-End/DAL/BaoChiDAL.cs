@@ -47,7 +47,21 @@ namespace DAL
                 throw ex;
             }
         }
-
+        public List<BaoChiModel> GetDataBao(string id)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "baochi_getTC", "@ID_TC",id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<BaoChiModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public bool Create(BaoChiModel model)
         {
             string msgError = "";
@@ -59,6 +73,7 @@ namespace DAL
                 "@Trang_BD", model.Trang_BD,
                 "@Trang_KT", model.Trang_KT,
                 "@ID_TapChi", model.ID_TapChi,
+                "@ID_GV", model.ID_GV,
                 "@TG_XB", model.TG_XB
                 );
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
@@ -78,7 +93,7 @@ namespace DAL
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "baochi_delete",
-                "@ID_BBao", id);
+                "@ID_BB", id);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -101,6 +116,7 @@ namespace DAL
                 "@Trang_BD", model.Trang_BD,
                 "@Trang_KT", model.Trang_KT,
                 "@ID_TapChi", model.ID_TapChi,
+                "@ID_GV", model.ID_GV,
                 "@TG_XB", model.TG_XB);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {

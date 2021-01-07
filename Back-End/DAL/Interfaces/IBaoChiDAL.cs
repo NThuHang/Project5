@@ -9,6 +9,7 @@ namespace DAL
     {
         List<BaoChiModel> GetData();
         BaoChiModel GetDatabyID(string id);
+        List<BaoChiModel> GetDataBao(string id);
         bool Create(BaoChiModel model);
         bool Update(BaoChiModel model);
         bool Delete(string id);

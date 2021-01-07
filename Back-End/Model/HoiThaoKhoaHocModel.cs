@@ -15,5 +15,7 @@ namespace Model
         public int Trang_KT { get; set; }
         public string HinhThuc_BaiDang { get; set; }
         public string QuocGia { get; set; }
+        public string ID_GV { get; set; }
+        public string HoTen { get; set; }
     }
 }

@@ -8,6 +8,7 @@ namespace BLL
     public partial interface ITapChiBLL
     {
         List<TapChiModel> GetData();
+        List<TapChiModel> GetbyIDLoai(string id);
         bool Create(TapChiModel model);
         bool Update(TapChiModel model);
         bool Delete(string id);

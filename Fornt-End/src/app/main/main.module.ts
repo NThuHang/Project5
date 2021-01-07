@@ -34,22 +34,23 @@ export const mainRoutes: Routes = [
         path: 'qlgiangvien',
         loadChildren: () =>
           import('./ql-giangvien/ql-giangvien.module').then((m) => m.QlGiangvienModule),
-          canActivate: [RoleGuard],
-          data: { Quyen: [Role.Admin] },
+
       },
       {
         path: 'qlbaochi',
         loadChildren: () =>
           import('./ql-baochi/ql-baochi.module').then((m) => m.QlBaochiModule),
-          canActivate: [RoleGuard],
-          data: { Quyen: [Role.Admin] },
+
       },
       {
         path: 'qltaikhoan',
         loadChildren: () =>
           import('./ql-taikhoan/ql-taikhoan.module').then((m) => m.QltaikhoanModule),
-          canActivate: [RoleGuard],
-          data: { Quyen: [Role.Admin] },
+      },
+      {
+        path: 'qldulieu',
+        loadChildren: () =>
+          import('./ql-dulieukhoahoc/ql-dulieukhoahoc.module').then((m) => m.QlDulieukhoahocModule),
       },
 
     ],

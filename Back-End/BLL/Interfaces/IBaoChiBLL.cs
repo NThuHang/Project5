@@ -8,6 +8,8 @@ namespace BLL
     public partial interface IBaoChiBLL
     {
         List<BaoChiModel> GetData();
+
+        List<BaoChiModel> GetDataBao(string id);
         bool Create(BaoChiModel model);
         bool Update(BaoChiModel model);
         bool Delete(string id);

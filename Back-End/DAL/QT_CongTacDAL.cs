@@ -36,8 +36,8 @@ namespace DAL
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "QT_CongTac_getID",
-                     "@ID_BBao", id);
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "congtac_getID",
+                     "@ID_CT", id);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<QT_CongTacModel>().FirstOrDefault();
@@ -53,7 +53,7 @@ namespace DAL
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "QT_CongTac_create",
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "congtac_create",
                 "@ID_CT", model.ID_CT,
                 "@ID_GV", model.ID_GV,
                 "@ID_BM", model.ID_BM,
@@ -78,8 +78,8 @@ namespace DAL
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "QT_CongTac_delete",
-                "@ID_BBao", id);
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "congtac_delete",
+                "@ID_CT", id);
                 if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
                 {
                     throw new Exception(Convert.ToString(result) + msgError);
@@ -96,7 +96,7 @@ namespace DAL
             string msgError = "";
             try
             {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "QT_CongTac_update",
+                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "congtac_update",
                 "@ID_CT", model.ID_CT,
                 "@ID_GV", model.ID_GV,
                 "@ID_BM", model.ID_BM,
@@ -122,13 +122,31 @@ namespace DAL
             total = 0;
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "QT_CongTac_search",
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "congtac_search",
                     "@page_index", pageIndex,
                     "@page_size", pageSize,
                      "@ten", ten);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
+                return dt.ConvertTo<QT_CongTacModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<QT_CongTacModel> GetGV(string id)
+        {
+            string msgError = "";
+            try
+            {
+
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "congtac_getAll_ID_giangvien",
+                     "@ID_GV", id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
                 return dt.ConvertTo<QT_CongTacModel>().ToList();
             }
             catch (Exception ex)

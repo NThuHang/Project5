@@ -7,6 +7,6 @@ namespace BLL
 {
     public partial interface IDanhMucBLL
     {
-        List<DanhMucModel> GetData();
+        List<DanhMucModel> GetData(string quyen);
     }
 }

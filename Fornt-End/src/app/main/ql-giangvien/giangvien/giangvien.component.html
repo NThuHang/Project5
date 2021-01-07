@@ -43,13 +43,12 @@
                   <form class="form-horizontal" role="form" [formGroup]="formload">
                   <div class="form-group form-group-default">
                     <label>Số Dòng</label>
-                    <input type="number" min="1" max="100" class="form-control" ng-model="pageSize">
-                    <!-- <select class="form-control" formControlName="hang" id="formGroupDefaultSelect" >
-                      <option value="3">5</option>
-                      <option value="5">10</option>
+                    <select class="form-control" #myselect (change)="updateValue(myselect.value)">
+                      <option value="5" >5</option>
+                      <option value="10">10</option>
                       <option value="15">15</option>
                       <option value="20">20</option>
-                    </select> -->
+                    </select>
                   </div>
                   </form>
                  </div>
@@ -70,10 +69,10 @@
                  <ng-template pTemplate="header">
                     <tr>
                        <th style="width: 70px; text-align: center;">STT</th>
-                       <th style="width: 80px; text-align: left;">Hình Ảnh</th>
-                       <th style="width: 20%; text-align: left;">Họ Tên</th>
-                       <th style="width: 20%; text-align: left;">Địa Chỉ</th>
-                       <th style="width: 120px; text-align: left;">Tác vụ</th>
+                       <th style="width: 80px; text-align: center;">Hình Ảnh</th>
+                       <th style="width: 20%; text-align: center;">Họ Tên</th>
+                       <th style="width: 20%; text-align: center;">Địa Chỉ</th>
+                       <th style="width: 100px; text-align: center;">Tác vụ</th>
                     </tr>
                  </ng-template>
                  <ng-template pTemplate="body" let-item  let-i="rowIndex">
@@ -83,10 +82,13 @@
                        <td>{{ item.hoTen }}</td>
                        <td>{{ item.diaChi }}</td>
                        <td>
-                          <button (click)="openUpdateModal(item)" data-toggle="tooltip" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
+                          <button (click)="chitiet(item)" data-toggle="tooltip" class="btn btn-icon btn-link btn-success" data-original-title="Xem Thông Tin">
+                            <i class="fa fa-eye"></i>
+                          </button>
+                          <button (click)="openUpdateModal(item)" data-toggle="tooltip" class="btn btn-icon btn-link btn-warning" data-original-title="Chỉnh sửa">
                             <i class="fa fa-edit"></i>
                           </button>
-                          <button id="alert_demo_7" (click)="onDelete(item)" data-toggle="tooltip" class="btn btn-link btn-danger" data-original-title="Xóa">
+                          <button (click)="onDelete(item)" data-toggle="tooltip" class="btn btn-icon btn-link btn-danger" data-original-title="Xóa">
                             <i class="fa fa-times"></i>
                           </button>
                       </td>
@@ -111,7 +113,7 @@
      </div>
   </div>
 </div>
-<!-- Modal -->
+<!-- Modal Update -->
 <div *ngIf="showUpdateModal" id="createUserModal" class="modal fade" role="dialog">
   <div class="modal-dialog modal-lg full-height-modal ">
      <div class="modal-content">
@@ -150,7 +152,8 @@
                 </label>
                 <input type="email" class=" form-control" placeholder="Email" formControlName="email"/>
                 <small class="form-text text-muted" *ngIf="submitted && f.email.errors">
-                  <i style="color: red;" *ngIf="f.email.errors.required">Hãy nhập thông tin họ tên</i>
+                  <i style="color: red;" *ngIf="f.email.errors.required">Hãy nhập email của giảng viên</i>
+                  <i style="color: red;" *ngIf="f.email.errors.email">Email nhập không đúng định dạng</i>
                 </small>
               </div>
             </div>
@@ -186,10 +189,10 @@
               </div>
               <div class="form-group">
                 <label class="control-label no-padding-right"> Quê quán  </label>
-                <textarea class="form-control" id="comment" rows="3">
+                <textarea class="form-control" id="comment" rows="3" formControlName="queQuan">
                 </textarea>
                 <small class="form-text text-muted">
-                  <i>Hãy nhập thông tin họ tên</i>
+                  <i>Hãy nhập thông tin quê quán</i>
                 </small>
               </div>
               <div class="form-group">
@@ -197,24 +200,101 @@
                   <span style="color: red;">*</span>)
                 </label>
                 <p-fileUpload #file_image mode="advanced" [showUploadButton]="false" cancelLabel="Hủy" chooseLabel ="Chọn ảnh"   multiple="false" accept="image/*" maxFileSize="1000000">
-                <ng-template pTemplate="content">
-                    <img *ngIf="giangviens && giangviens.hinhAnh" style="height: 100px;width: 100px;" [src]="giangviens.hinhAnh">
+                <ng-template pTemplate="content" >
+                    <img  *ngIf="giangvien && giangvien.hinhAnh" style="height: 100px;width: 100px;" [src]="giangvien.hinhAnh">
                 </ng-template>
                 </p-fileUpload>
-                <!-- <small class="form-text text-muted" *ngIf="submitted && f.email.errors">
-                  <i style="color: red;" *ngIf="f.email.errors.required">Hãy nhập thông tin họ tên</i>
-                </small> -->
+
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" (click)="Reset()"> Làm mới</button>
-          <button type="submit" class="btn btn-success" id="alert_demo_3.3">Lưu lại</button>
+          <button type="submit" class="btn btn-success" >Lưu lại</button>
           <button type="button" class="btn btn-danger" (click)="closeModal()"> Đóng lại</button>
         </div>
         </form>
      </div>
   </div>
 </div>
-
+<!-- Modal chi tiết -->
+<div *ngIf="showCTModal" id="profileModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg full-height-modal ">
+     <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">THÔNG TIN GIẢNG VIÊN</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body no-padding">
+          <div class="row">
+            <div class="col-sm-6 col-md-4">
+              <img width="180px" height="180px" [src]="giangvien.hinhAnh" alt="" class="img-rounded img-responsive"/>
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <h3>{{giangvien.hoTen}}</h3>
+              <p style="font-size: 15px;">
+                <i class=" fas fa-user"></i>&emsp;{{giangvien.gioiTinh}}<br/>
+                <i class="far fa-calendar-alt"></i>&emsp;{{giangvien.ngaySinh| date:'d/M/yyyy'}}<br/>
+                <i class="fas fa-envelope"></i>&emsp;{{giangvien.email}}<br />
+                <i class="fas fa-phone"></i>&emsp;{{giangvien.sdt}}<br/>
+                <i class="fas fa-map-marker-alt"></i>&emsp;{{giangvien.diaChi}}<br/>
+                <i class=" fas fa-home"></i>&emsp;{{giangvien.queQuan}}<br/>
+              </p>
+            </div>
+            <div class="col-md-12 " >
+              <h4>1. Quá Trình Đào Tạo</h4>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên Đào Tạo</th>
+                    <th scope="col">Nội Dung</th>
+                    <th scope="col">Chuyên Môn</th>
+                    <th scope="col">Thời Gian</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let x of daotao let i = index" >
+                    <td>{{i+1}}</td>
+                    <td>{{x.ten_DT}}</td>
+                    <td>{{x.nD_DT}}</td>
+                    <td>{{x.chuyenMon}}</td>
+                    <td>{{x.thoiGian}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-12 " >
+              <h4>2. Quá Trình Công Tác</h4>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th style="width: 150px; text-align: left;"scope="col">STT</th>
+                    <th scope="col">Cơ Quan</th>
+                    <th scope="col">Địa Chỉ</th>
+                    <th scope="col">Chức Vụ</th>
+                    <th scope="col">Thời Gian</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let x of congtac index as i" >
+                    <td>{{i+1}}</td>
+                    <td>{{x.coQuan}}</td>
+                    <td>{{x.diaChi}}</td>
+                    <td>{{x.chucVu}}</td>
+                    <td>{{x.thoiGian}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="closeModal()"> Đóng lại</button>
+        </div>
+     </div>
+  </div>
+</div>

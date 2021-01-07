@@ -42,11 +42,11 @@
                  <div class="col-lg-2">
                   <div class="form-group form-group-default">
                     <label>Số Dòng</label>
-                    <select class="form-control" id="formGroupDefaultSelect">
-                      <option>5</option>
-                      <option>10</option>
-                      <option>15</option>
-                      <option>20</option>
+                    <select class="form-control" #myselect (change)="updateValue(myselect.value)">
+                      <option value="3" >3</option>
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option value="20">20</option>
                     </select>
                   </div>
                  </div>
@@ -62,29 +62,32 @@
                  </div>
                </div>
               </form>
-              <p-table selectionMode="single" [value]="tapchis" styleClass="p-datatable-gridlines">
+              <p-table selectionMode="single" [value]="tapchis" styleClass="p-datatable-gridlines" [rowsPerPageOptions]="[10,25,50]">
                  <ng-template pTemplate="header">
                     <tr>
                        <th style="width: 70px; text-align: center;">STT</th>
                        <th style="width: 20%; text-align: left;">Tên Tạp Chí</th>
-                       <th style="width: 20%; text-align: left;">Đơn Vị</th>
+                       <th style="width: 20%; text-align: left;">Loại Tạp Chí</th>
                        <th style="width: 10%; text-align: left;">Quốc Gia</th>
                        <th style="width: 120px; text-align: left;">Tác Vụ</th>
                     </tr>
                  </ng-template>
-                 <ng-template pTemplate="body" let-item  let-i="rowIndex">
-                    <tr>
+                 <ng-template pTemplate="body" let-item  let-i="rowIndex" >
+                  <tr>
                        <td style="width: 70px; text-align: center;">{{ i + 1 }}</td>
                        <td>{{ item.ten_TapChi }}</td>
-                       <td>{{ item.donVi }}</td>
+                       <td>{{ item.ten_Loai }}</td>
                        <td>{{ item.quocGia }}</td>
                        <td>
-                          <button (click)="openUpdateModal(item)" data-toggle="tooltip" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
-                            <i class="fa fa-edit"></i>
-                          </button>
-                          <button id="alert_demo_7" (click)="onDelete(item)" data-toggle="tooltip" class="btn btn-link btn-danger" data-original-title="Xóa">
-                            <i class="fa fa-times"></i>
-                          </button>
+                        <button (click)="chitiet(item)" data-toggle="tooltip" class="btn btn-icon btn-link btn-success" data-original-title="Xem Thông Tin">
+                          <i class="fa fa-eye"></i>
+                        </button>
+                        <button (click)="openUpdateModal(item)" data-toggle="tooltip" class="btn btn-icon btn-link btn-warning" data-original-title="Chỉnh sửa">
+                          <i class="fa fa-edit"></i>
+                        </button>
+                        <button (click)="onDelete(item)" data-toggle="tooltip" class="btn btn-icon btn-link btn-danger" data-original-title="Xóa">
+                          <i class="fa fa-times"></i>
+                        </button>
                       </td>
                     </tr>
                  </ng-template>
@@ -176,6 +179,53 @@
           <button type="button" class="btn btn-danger" (click)="closeModal()"> Đóng lại</button>
         </div>
         </form>
+     </div>
+  </div>
+</div>
+<!-- Modal chi tiết -->
+<div *ngIf="showCTModal" id="profileModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg full-height-modal ">
+     <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">THÔNG TIN TẠP CHÍ</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body no-padding">
+          <div class="row">
+            <div class="col-md-12" >
+              <p></p>
+              <h4>* Tên Tạp Chí: <b>{{tapchi.ten_TapChi}} </b></h4><br/>
+              <h4>* Đơn Vị: <b>{{tapchi.donVi}} </b></h4><br/>
+              <h4>* Quốc Gia: <b>{{tapchi.quocGia}} </b></h4><br/>
+              <h4>* Danh Sách Các Bài Báo:</h4><br/>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên Bài Báo</th>
+                    <th scope="col">Trang</th>
+                    <th scope="col">Xuất Bản</th>
+                    <th scope="col">Thực Hiện</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let x of bbao let i = index" >
+                    <td>{{i+1}}</td>
+                    <td>{{x.ten_BBao}}</td>
+                    <td>{{x.trang_BD}}</td>
+                    <td>{{x.tG_XB|date:'d/M/yyyy'}}</td>
+                    <td>{{x.hoTen}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="closeModal()"> Đóng lại</button>
+        </div>
      </div>
   </div>
 </div>

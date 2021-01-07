@@ -22,8 +22,12 @@ export class GiangvienComponent extends BaseComponent implements OnInit {
   public formload: any;
   public doneSetupForm: any;
   public showUpdateModal:any;
+  public showCTModal:any;
   public isCreate:any;
+  public congtac:any;
+  public daotao:any;
   submitted = false;
+  pages: any;
   @ViewChild(FileUpload, { static: false }) file_image: FileUpload;
   constructor(private fb: FormBuilder, injector: Injector) {
     super(injector);
@@ -35,7 +39,18 @@ export class GiangvienComponent extends BaseComponent implements OnInit {
     this.search();
   }
 
+  updateValue(value: any){
+    this.pages = value;
+    this.search();
+  }
+
   loadPage(page) {
+    if(this.pages != null){
+      this.pageSize = this.pages;
+    }
+    else{
+      this.pageSize = 5;
+    }
     this._api.post('/api/giangvien/search',{page: page, pageSize: this.pageSize}).takeUntil(this.unsubscribe).subscribe(res => {
       this.giangviens = res.data;
       this.totalRecords =  res.totalItems;
@@ -45,13 +60,17 @@ export class GiangvienComponent extends BaseComponent implements OnInit {
 
   search() {
     this.page = 1;
-    this.pageSize = 5;
+    if(this.pages != null){
+      this.pageSize = this.pages;
+    }
+    else{
+      this.pageSize = 5;
+    }
     this._api.post('/api/giangvien/search',{page: this.page, pageSize: this.pageSize , hoten: this.formsearch.get('hoten').value}).takeUntil(this.unsubscribe).subscribe(res => {
       this.giangviens = res.data;
       this.totalRecords =  res.totalItems;
       this.pageSize = res.pageSize;
       });
-      console.log(this.pageSize);
   }
 
   get f() { return this.formdata.controls; }
@@ -78,25 +97,41 @@ export class GiangvienComponent extends BaseComponent implements OnInit {
           alert('Thêm thành công');
           this.search();
           this.closeModal();
-          console.log(this.isCreate);
+
           });
       });
     } else {
       this.getEncodeFromImage(this.file_image).subscribe((data: any): void => {
         let data_image = data == '' ? null : data;
-        let tmp = {
-          HinhAnh:data_image,
-          HoTen:value.hoTen,
-          DiaChi:value.diaChi,
-          GioiTinh:value.gioiTinh,
-          Email:value.email,
-          NgaySinh:value.ngaySinh,
-          Sdt:value.sdt,
-          QueQuan:value.queQuan,
-          ID_GV:this.giangvien.iD_GV,
-        };
+        let tmp;
+        if(data==''){
+          tmp = {
+            HinhAnh:this.giangvien.hinhAnh,
+            HoTen:value.hoTen,
+            DiaChi:value.diaChi,
+            GioiTinh:value.gioiTinh,
+            Email:value.email,
+            NgaySinh:value.ngaySinh,
+            Sdt:value.sdt,
+            QueQuan:value.queQuan,
+            ID_GV:this.giangvien.iD_GV,
+          };
+        }
+        else{
+          tmp = {
+            HinhAnh:data_image,
+            HoTen:value.hoTen,
+            DiaChi:value.diaChi,
+            GioiTinh:value.gioiTinh,
+            Email:value.email,
+            NgaySinh:value.ngaySinh,
+            Sdt:value.sdt,
+            QueQuan:value.queQuan,
+            ID_GV:this.giangvien.iD_GV,
+          };
+        }
         this._api.post('/api/giangvien/update-gv',tmp).takeUntil(this.unsubscribe).subscribe(res => {
-          alert('Cập nhật thành công');
+          alert('Cập nhật thành công!');
           this.search();
           this.closeModal();
           });
@@ -111,6 +146,22 @@ export class GiangvienComponent extends BaseComponent implements OnInit {
       alert('Xóa thành công');
       this.search();
       });
+  }
+
+  public chitiet(row) {
+    this.showCTModal=true;
+    setTimeout(() => {
+      $('#profileModal').modal('toggle');
+      this._api.get('/api/giangvien/get-by-id/'+ row.iD_GV).subscribe(res=> {
+        this.giangvien = res;
+        });
+      this._api.get('/api/qt_congtac/get-gv/'+ row.iD_GV).subscribe(res=>{
+        this.congtac = res;
+      })
+      this._api.get('/api/qt_daotao/get-gv/'+ row.iD_GV).subscribe(res=>{
+        this.daotao = res;
+      })
+    });
   }
 
   Reset() {
@@ -176,5 +227,6 @@ export class GiangvienComponent extends BaseComponent implements OnInit {
 
   closeModal() {
     $('#createUserModal').closest('.modal').modal('hide');
+    $('#profileModal').closest('.modal').modal('hide');
   }
 }

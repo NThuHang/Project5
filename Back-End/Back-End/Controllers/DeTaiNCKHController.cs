@@ -37,7 +37,7 @@ namespace API.Controllers
             return _DeTaiNCKHBLL.GetDatabyID(id);
         }
 
-        [Route("create-DeTaiNCKH")]
+        [Route("create-detai")]
         [HttpPost]
         public DeTaiNCKHModel CreateItem([FromBody] DeTaiNCKHModel model)
         {
@@ -46,7 +46,7 @@ namespace API.Controllers
             return model;
         }
 
-        [Route("delete-DeTaiNCKH")]
+        [Route("delete-detai")]
         [HttpPost]
         public IActionResult DeleteUser([FromBody] Dictionary<string, object> formData)
         {
@@ -56,7 +56,7 @@ namespace API.Controllers
             return Ok();
         }
 
-        [Route("update-DeTaiNCKH")]
+        [Route("update-detai")]
         [HttpPost]
         public DeTaiNCKHModel UpdateUser([FromBody] DeTaiNCKHModel model)
         {

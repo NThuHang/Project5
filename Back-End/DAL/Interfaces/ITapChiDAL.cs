@@ -9,6 +9,7 @@ namespace DAL
     {
         List<TapChiModel> GetData();
         TapChiModel GetDatabyID(string id);
+        List<TapChiModel> GetbyIDLoai(string id);
         bool Create(TapChiModel model);
         bool Update(TapChiModel model);
         bool Delete(string id);

@@ -18,6 +18,10 @@ namespace BLL
         {
             return _res.GetData();
         }
+        public List<TapChiModel> GetbyIDLoai(string id)
+        {
+            return _res.GetbyIDLoai(id);
+        }
         public bool Create(TapChiModel model)
         {
             return _res.Create(model);

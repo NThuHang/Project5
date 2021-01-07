@@ -11,8 +11,9 @@ namespace Model
         public string Ten_DM { get; set; }
         public string Url { get; set; }
         public string Icon { get; set; }
+        public string Quyen { get; set; }
         public short? Seq_Num { get; set; }
         public List<DanhMucModel> DM_Con { get; set; }
-        public string type { get; set; }
+        public bool? TrangThai { get; set; }
     }
 }

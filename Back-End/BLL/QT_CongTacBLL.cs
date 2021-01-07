@@ -40,6 +40,11 @@ namespace BLL
         {
             return _res.Search(pageIndex, pageSize, out total, ten);
         }
+        public List<QT_CongTacModel> GetGV(string id)
+        {
+            return _res.GetGV(id);
+        }
+
     }
 
 }

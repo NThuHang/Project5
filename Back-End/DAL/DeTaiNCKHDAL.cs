@@ -21,7 +21,7 @@ namespace DAL
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "DeTaiNCKH_getAll");
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "detai_nckh_getAll");
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<DeTaiNCKHModel>().ToList();
@@ -122,7 +122,7 @@ namespace DAL
             total = 0;
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "DeTaiNCKH_search",
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "detainckh_search",
                     "@page_index", pageIndex,
                     "@page_size", pageSize,
                      "@ten", ten);

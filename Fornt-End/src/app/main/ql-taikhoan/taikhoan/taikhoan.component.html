@@ -1,6 +1,6 @@
 <div class="page-inner">
   <div class="page-header">
-     <h4 class="page-title">Quản Lý Giảng Viên</h4>
+     <h4 class="page-title">Quản Lý Tài Khoản</h4>
      <ul class="breadcrumbs">
         <li class="nav-home">
            <a href="#">
@@ -11,13 +11,13 @@
            <i class="flaticon-right-arrow"></i>
         </li>
         <li class="nav-item">
-           <a href="#">Giảng Viên</a>
+           <a href="#">Tài Khoản</a>
         </li>
         <li class="separator">
            <i class="flaticon-right-arrow"></i>
         </li>
         <li class="nav-item">
-           <a href="#">Danh Sách Giảng Viên</a>
+           <a href="#">Danh Sách Tài Khoản</a>
         </li>
      </ul>
   </div>
@@ -26,7 +26,7 @@
         <div class="card">
            <div class="card-header">
               <div class="card-title">
-                 Danh Sách Giảng Viên
+                 Danh Sách Tài Khoản
                  <div class="them">
                     <button class="btn btn-success" (click)="createModal()">
                     <span class="btn-label">
@@ -66,9 +66,9 @@
                  <ng-template pTemplate="header">
                     <tr>
                        <th style="width: 70px; text-align: center;">STT</th>
-                       <th style="width: 20%; text-align: left;">Họ Tên</th>
-                       <th style="width: 20%; text-align: left;">Địa Chỉ</th>
-                       <th style="width: 120px; text-align: left;">Tác vụ</th>
+                       <th style="width: 20%; text-align: left;">Tên Đăng Nhập</th>
+                       <th style="width: 20%; text-align: left;">Quyền</th>
+                       <th style="width: 120px; text-align: left;">Trạng Thái</th>
                     </tr>
                  </ng-template>
                  <ng-template pTemplate="body" let-item  let-i="rowIndex">
@@ -110,8 +110,8 @@
   <div class="modal-dialog modal-lg full-height-modal ">
      <div class="modal-content">
         <div class="modal-header">
-          <h4  *ngIf="isCreate" class="modal-title">THÊM GIẢNG VIÊN</h4>
-          <h4 *ngIf="!isCreate" class="modal-title">SỬA GIẢNG VIÊN</h4>
+          <h4  *ngIf="isCreate" class="modal-title">THÊM Tài Khoản</h4>
+          <h4 *ngIf="!isCreate" class="modal-title">SỬA Tài Khoản</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

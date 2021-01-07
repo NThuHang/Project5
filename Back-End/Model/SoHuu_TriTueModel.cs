@@ -10,6 +10,8 @@ namespace Model
         public string Ten_TriTue { get; set; }
         public string ThoiGian { get; set; }
         public string DonVi_Cap { get; set; }
+        public string ID_GV { get; set; }
+        public string Ten_GV { get; set; }
 
     }
 }

@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-
+    console.log(this.f.username.value);
     this.loading = true;
     this.authenticationService
       .login(this.f.username.value, this.f.password.value)
@@ -64,6 +64,7 @@ export class LoginComponent implements OnInit {
           this.loading = false;
         }
       );
+      console.log(this.f.username.value);
   }
 
 }

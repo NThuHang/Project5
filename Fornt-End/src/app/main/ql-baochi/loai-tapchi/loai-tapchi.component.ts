@@ -12,8 +12,9 @@ declare var $: any;
 export class LoaiTapchiComponent extends BaseComponent implements OnInit {
   public loaiTCs: any ;
   public loaiTC: any;
+  public tapchi: any;
   public totalRecords:any;
-  public pageSize = 3;
+  public pageSize :any;
   public page = 1;
   public uploadedFiles: any[] = [];
   public formsearch: any;
@@ -21,7 +22,9 @@ export class LoaiTapchiComponent extends BaseComponent implements OnInit {
   public doneSetupForm: any;
   public showUpdateModal:any;
   public isCreate:any;
+  public showCTModal:any;
   submitted = false;
+  pages:any;
   @ViewChild(FileUpload, { static: false }) file_image: FileUpload;
 
   constructor(private fb: FormBuilder, injector: Injector) {
@@ -34,8 +37,21 @@ export class LoaiTapchiComponent extends BaseComponent implements OnInit {
     this.search();
   }
 
+  updateValue(value: any){
+    this.pages = value;
+    console.log(this.pages);
+    this.search();
+  }
+
   loadPage(page) {
-    this._api.post('/api/loaiTC/search',{page: page, pageSize: this.pageSize}).takeUntil(this.unsubscribe).subscribe(res => {
+
+    if(this.pages != null){
+      this.pageSize = this.pages;
+    }
+    else{
+      this.pageSize = 3;
+    }
+    this._api.post('/api/loai_tapchi/search',{page: page, pageSize: this.pageSize}).takeUntil(this.unsubscribe).subscribe(res => {
       this.loaiTCs = res.data;
       this.totalRecords =  res.totalItems;
       this.pageSize = res.pageSize;
@@ -44,14 +60,31 @@ export class LoaiTapchiComponent extends BaseComponent implements OnInit {
 
   search() {
     this.page = 1;
-    this.pageSize = 5;
-    this._api.post('/api/loaiTC/search',{page: this.page, pageSize: this.pageSize, ten: this.formsearch.get('ten').value}).takeUntil(this.unsubscribe).subscribe(res => {
+    if(this.pages != null){
+      this.pageSize = this.pages;
+    }
+    else{
+      this.pageSize = 3;
+    }
+    this._api.post('/api/loai_tapchi/search',{page: this.page, pageSize: this.pageSize, ten: this.formsearch.get('ten').value}).takeUntil(this.unsubscribe).subscribe(res => {
       this.loaiTCs = res.data;
       this.totalRecords =  res.totalItems;
       this.pageSize = res.pageSize;
       });
   }
 
+  public chitiet(row) {
+    this.showCTModal=true;
+    setTimeout(() => {
+      $('#profileModal').modal('toggle');
+      this._api.get('/api/loai_tapchi/get-by-id/'+ row.iD_LoaiTC).subscribe(res=> {
+        this.loaiTC= res;
+        });
+      this._api.get('/api/tapchi/get-by-loai/'+ row.iD_LoaiTC).subscribe(res=>{
+        this.tapchi = res;
+      })
+    });
+  }
   get f() { return this.formdata.controls; }
 
   onSubmit(value) {
@@ -61,29 +94,21 @@ export class LoaiTapchiComponent extends BaseComponent implements OnInit {
     }
     if(this.isCreate) {
         let tmp = {
-          ID_BBao:value.iD_BBao,
-          Ten_BBao:value.ten_BBao,
-          Trang_BD:value.trang_BD,
-          Trang_KT:value.trang_KT,
-          ID_TapChi:value.iD_TapChi ,
-          TG_XB:value.tG_XB ,
+          ID_LoaiTC:value.iD_LoaiTC,
+          Ten_Loai:value.ten_Loai,
           };
-        this._api.post('/api/loaiTC/create-loaiTC',tmp).takeUntil(this.unsubscribe).subscribe(res => {
+        this._api.post('/api/loai_tapchi/create-loaiTC',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Thêm thành công');
           this.search();
           this.closeModal();
           });
     } else {
         let tmp = {
-          ID_BBao:value.iD_BBao,
-          Ten_BBao:value.ten_BBao,
-          Trang_BD:value.trang_BD,
-          Trang_KT:value.trang_KT,
-          ID_TapChi:value.iD_TapChi ,
-          TG_XB:value.tG_XB  ,
+          ID_LoaiTC:value.iD_LoaiTC,
+          Ten_Loai:value.ten_Loai,
           ID_loaiTC:this.loaiTC.iD_loaiTC
         };
-        this._api.post('/api/loaiTC/update-loaiTC',tmp).takeUntil(this.unsubscribe).subscribe(res => {
+        this._api.post('/api/loai_tapchi/update-loaiTC',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Cập nhật thành công');
           this.search();
           this.closeModal();
@@ -94,7 +119,7 @@ export class LoaiTapchiComponent extends BaseComponent implements OnInit {
 
 
   onDelete(row) {
-    this._api.post('/api/loaiTC/delete-loaiTC',{loaiTC_id:row.iD_loaiTC}).takeUntil(this.unsubscribe).subscribe(res => {
+    this._api.post('/api/loai_tapchi/delete-loaiTC',{bc_id:row.iD_LoaiTC}).takeUntil(this.unsubscribe).subscribe(res => {
       alert('Xóa thành công');
       this.search();
       });
@@ -103,12 +128,8 @@ export class LoaiTapchiComponent extends BaseComponent implements OnInit {
   Reset() {
     this.loaiTC = null;
     this.formdata = this.fb.group({
-      'iD_BBao': ['', Validators.required],
-      'ten_BBao': ['', Validators.required],
-      'trang_BD': ['', Validators.required],
-      'trang_KT': ['', Validators.required],
-      'iD_TapChi' : ['', Validators.required],
-      'tG_XB'  : ['', Validators.required]
+      'iD_LoaiTC': ['', Validators.required],
+      'ten_Loai': ['', Validators.required]
     } );
   }
 
@@ -120,12 +141,8 @@ export class LoaiTapchiComponent extends BaseComponent implements OnInit {
     setTimeout(() => {
       $('#createModal').modal('toggle');
       this.formdata = this.fb.group({
-        'iD_BBao': ['', Validators.required],
-        'ten_BBao': ['', Validators.required],
-        'trang_BD': ['', Validators.required],
-        'trang_KT': ['', Validators.required],
-        'iD_TapChi' : ['', Validators.required],
-        'tG_XB'  : ['', Validators.required]
+        'iD_LoaiTC': ['', Validators.required],
+        'ten_Loai': ['', Validators.required]
       });
       this.doneSetupForm = true;
     });
@@ -137,16 +154,12 @@ export class LoaiTapchiComponent extends BaseComponent implements OnInit {
     this.isCreate = false;
     setTimeout(() => {
       $('#createModal').modal('toggle');
-      this._api.get('/api/loaiTC/get-by-id/'+ row.iD_BBao).takeUntil(this.unsubscribe).subscribe((res:any) => {
+      this._api.get('/api/loai_tapchi/get-by-id/'+ row.iD_LoaiTC).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.loaiTC = res;
-
+        console.log(res);
           this.formdata = this.fb.group({
-            'iD_BBao': [this.loaiTC.iD_BBao, Validators.required],
-            'ten_BBao': [this.loaiTC.ten_BBao, Validators.required],
-            'trang_BD': [this.loaiTC.trang_BD, Validators.required],
-            'trang_KT': [this.loaiTC.trang_KT, Validators.required],
-            'iD_TapChi' : [this.loaiTC.iD_TapChi, Validators.required],
-            'tG_XB'  : [this.loaiTC.tG_XB, Validators.required]
+            'iD_LoaiTC': [this.loaiTC.iD_LoaiTC, Validators.required],
+            'ten_Loai': [this.loaiTC.ten_Loai, Validators.required]
           });
           this.doneSetupForm = true;
         });
@@ -155,6 +168,7 @@ export class LoaiTapchiComponent extends BaseComponent implements OnInit {
 
   closeModal() {
     $('#createModal').closest('.modal').modal('hide');
+    $('#profileModal').closest('.modal').modal('hide');
   }
 }
 

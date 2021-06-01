@@ -11,7 +11,6 @@ import { RoleGuard } from '../lib/auth.guard';
 import { Role } from '../models/role';
 import { UnauthorizedComponent } from '../shared/unauthorized/unauthorized.component';
 import { FileNotFoundComponent } from '../shared/file-not-found/file-not-found.component';
-import { MenuComponent } from './menu/menu.component';
 
 export const mainRoutes: Routes = [
   {
@@ -52,7 +51,11 @@ export const mainRoutes: Routes = [
         loadChildren: () =>
           import('./ql-dulieukhoahoc/ql-dulieukhoahoc.module').then((m) => m.QlDulieukhoahocModule),
       },
-
+      {
+        path: 'thongke',
+        loadChildren: () =>
+          import('./ql-thongke/ql-thongke.module').then((m) =>m.QlThongkeModule),
+      },
     ],
   },
 ];
@@ -63,7 +66,6 @@ export const mainRoutes: Routes = [
     SidebarComponent,
     FooterComponent,
     MainComponent,
-    MenuComponent
   ],
   imports: [
     SharedModule,

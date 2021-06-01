@@ -38,33 +38,33 @@
            </div>
            <div class="card-body ">
 
-               <div class="row">
-                 <div class="col-lg-2">
-                  <form class="form-horizontal" role="form" [formGroup]="formload">
-                  <div class="form-group form-group-default">
-                    <label>Số Dòng</label>
-                    <select class="form-control" #myselect (change)="updateValue(myselect.value)">
-                      <option value="5" >5</option>
-                      <option value="10">10</option>
-                      <option value="15">15</option>
-                      <option value="20">20</option>
-                    </select>
-                  </div>
-                  </form>
-                 </div>
-                 <div class="col-md-6 ml-auto">
-                  <div class="form-group">
-                    <form class="form-horizontal" role="form" [formGroup]="formsearch"  (ngSubmit)="search()">
-                      <div class="input-group">
-                        <input formControlName="hoten" type="text" class="form-control" placeholder="Tìm kiếm " aria-label="" aria-describedby="basic-addon1">
-                        <div class="input-group-prepend">
-                          <button (click)="search()" class="btn btn-sm btn-primary">Tìm kiếm</button>
-                        </div>
+              <div class="row">
+                <div class="col-lg-2">
+                <form class="form-horizontal" role="form" [formGroup]="formload">
+                <div class="form-group form-group-default">
+                  <label>Số Dòng</label>
+                  <select class="form-control" #myselect (change)="updateValue(myselect.value)">
+                    <option value="5" >5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                  </select>
+                </div>
+                </form>
+                </div>
+                <div class="col-md-6 ml-auto">
+                <div class="form-group">
+                  <form class="form-horizontal" role="form" [formGroup]="formsearch"  (ngSubmit)="search()">
+                    <div class="input-group">
+                      <input formControlName="hoten" type="text" class="form-control" placeholder="Tìm kiếm " aria-label="" aria-describedby="basic-addon1">
+                      <div class="input-group-prepend">
+                        <button (click)="search()" class="btn btn-sm btn-primary">Tìm kiếm</button>
                       </div>
-                    </form>
-                  </div>
-                 </div>
-               </div>
+                    </div>
+                  </form>
+                </div>
+                </div>
+              </div>
               <p-table selectionMode="single" [value]="giangviens" styleClass="p-datatable-gridlines">
                  <ng-template pTemplate="header">
                     <tr>
@@ -172,8 +172,9 @@
                   <span style="color: red;">*</span>)
                 </label>
                 <input type="tel" class=" form-control" placeholder="Số điện thoại" formControlName="sdt"/>
-                <small class="form-text text-muted" *ngIf="submitted && f.sdt.errors">
-                  <i style="color: red;" *ngIf="f.sdt.errors.required">Hãy nhập thông tin Số điện thoại</i>
+                <small class="form-text text-muted" *ngIf="submitted && f.sdt.errors&&!formdata.get('sdt').valid">
+                  <i style="color: red;" *ngIf="f.sdt.errors.required">Hãy nhập thông tin số điện thoại</i>
+                  <i style="color: red;" *ngIf="f.sdt.errors.pattern">Số điện thoại sai</i>
                 </small>
               </div>
             </div>
@@ -262,7 +263,7 @@
                     <td>{{x.ten_DT}}</td>
                     <td>{{x.nD_DT}}</td>
                     <td>{{x.chuyenMon}}</td>
-                    <td>{{x.thoiGian}}</td>
+                    <td>{{x.thoiGian| date:'d/M/yyyy'}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -285,7 +286,7 @@
                     <td>{{x.coQuan}}</td>
                     <td>{{x.diaChi}}</td>
                     <td>{{x.chucVu}}</td>
-                    <td>{{x.thoiGian}}</td>
+                    <td>{{x.thoiGian| date:'d/M/yyyy'}}</td>
                   </tr>
                 </tbody>
               </table>

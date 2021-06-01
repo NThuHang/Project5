@@ -174,7 +174,7 @@ export class BaochiComponent extends BaseComponent implements OnInit {
       $('#createModal').modal('toggle');
       this._api.get('/api/baochi/get-by-id/'+ row.iD_BBao).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.baochi = res;
-        console.log(res);
+
         let tg = new Date(this.baochi.tG_XB);
           this.formdata = this.fb.group({
             'ten_BBao': [this.baochi.ten_BBao, Validators.required],

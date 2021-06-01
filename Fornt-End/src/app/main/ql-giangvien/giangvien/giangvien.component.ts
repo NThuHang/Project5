@@ -1,6 +1,6 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { FileUpload } from 'primeng/fileupload';
-import { FormBuilder, Validators} from '@angular/forms';
+import { FormBuilder,FormControl, Validators} from '@angular/forms';
 import { BaseComponent } from '../../../lib/base-component';
 import 'rxjs/add/operator/takeUntil';
 declare var $: any;
@@ -140,7 +140,6 @@ export class GiangvienComponent extends BaseComponent implements OnInit {
 
   }
 
-
   onDelete(row) {
     this._api.post('/api/GiangVien/delete-gv',{gv_id:row.iD_GV}).takeUntil(this.unsubscribe).subscribe(res => {
       alert('Xóa thành công');
@@ -157,10 +156,10 @@ export class GiangvienComponent extends BaseComponent implements OnInit {
         });
       this._api.get('/api/qt_congtac/get-gv/'+ row.iD_GV).subscribe(res=>{
         this.congtac = res;
-      })
+      });
       this._api.get('/api/qt_daotao/get-gv/'+ row.iD_GV).subscribe(res=>{
         this.daotao = res;
-      })
+      });
     });
   }
 
@@ -192,7 +191,7 @@ export class GiangvienComponent extends BaseComponent implements OnInit {
         'gioiTinh': ['', Validators.required],
         'queQuan': [''],
         'diaChi': ['', Validators.required],
-        'sdt': ['', Validators.required],
+        'sdt': ['', Validators.required,Validators.pattern(/[0-9]*/)],
         'email': ['', [Validators.required,Validators.email]],
       });
       this.formdata.get('ngaySinh').setValue(this.today);

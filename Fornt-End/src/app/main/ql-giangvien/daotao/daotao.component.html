@@ -79,7 +79,7 @@
                        <td>{{ item.ten_DT }}</td>
                        <td>{{ item.chuyenMon }}</td>
                        <td>{{ item.nD_DT }}</td>
-                       <td>{{ item.thoiGian }}</td>
+                       <td>{{ item.thoiGian| date:'d/M/yyyy'}}</td>
                        <td>
                           <button (click)="openUpdateModal(item)" data-toggle="tooltip" class="btn btn-icon btn-link btn-warning" data-original-title="Chỉnh sửa">
                             <i class="fa fa-edit"></i>
